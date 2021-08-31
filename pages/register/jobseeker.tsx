@@ -1,0 +1,179 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+// eslint-disable-next-line no-use-before-define
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+import Button from '../../components/Button';
+import Footer from '../../components/Footer';
+import Layout from '../../components/Layout';
+import Navbar from '../../components/Navbar';
+
+const jobseeker = () => {
+  const initialState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    agree: '',
+  };
+
+  const router = useRouter();
+  const [formData, setFormData] = useState(initialState);
+  const [passwordValidation, setPasswordValidation] = useState(false);
+  const url = 'http://localhost:5000/register/jobseeker';
+
+  const signInAlert = (): void => {
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
+
+    Toast.fire({
+      icon: 'success',
+      title: 'Signed in successfully',
+    });
+  };
+
+  const registerJobseeker = async () => {
+    try {
+      const response = await axios.post(url, formData);
+      console.log(response);
+      signInAlert();
+      router.push('/');
+    } catch (error) {
+      console.log(error.response.data.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: error.response.data.message,
+      });
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent): void => {
+    e.preventDefault();
+    if (formData.agree && formData.password === formData.confirmPassword) {
+      setPasswordValidation(false);
+      registerJobseeker();
+    } else if (!formData.agree) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please indicate that you have read and agree to the Terms and Conditions.',
+      });
+      setPasswordValidation(false);
+    } else {
+      setPasswordValidation(true);
+    }
+  };
+
+  return (
+    <Layout title="Jobfinder: Register">
+      <Navbar />
+      <div className="flex justify-center items-center w-screen h-screen bg-gray-100">
+        <div className="flex flex-col items-center mt-60px bg-white sm:rounded-lg sm:shadow-md px-10 sm:px-14 lg:px-16 xl:px-20 2xl:px-28 2xl:py-20 py-14 h-3/4 max-h-[700px] sm:w-[60vw] md:w-[50vw] lg:w-[40vw]">
+          <h1 className="font-poppins font-bold text-lg 2xl:text-xl mb-6 2xl:mb-11">
+            Sign Up
+          </h1>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col justify-between mt-4 w-full h-full font-poppins text-sm"
+          >
+            <div className="flex justify-between w-full">
+              <input
+                type="text"
+                placeholder="First Name"
+                className="input-text w-[48%]"
+                name="firstName"
+                onChange={handleChange}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Last Name"
+                className="input-text w-[48%]"
+                name="lastName"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Email"
+              className="input-text w-full"
+              name="email"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="input-text w-full"
+              name="password"
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="input-text w-full"
+              name="confirmPassword"
+              onChange={handleChange}
+              required
+            />
+            {passwordValidation ? (
+              <p className="text-red-600">
+                Incorrect password. Password does not match.
+              </p>
+            ) : null}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="agree"
+                name="agree"
+                onChange={handleCheckbox}
+              />
+              <label htmlFor="agree" className="ml-2">
+                I agree to the
+                <span className="text-blue-600 cursor-pointer">
+                  {' '}
+                  terms of service
+                </span>
+              </label>
+            </div>
+
+            <Button variant="blue" type="submit">
+              Sign Up
+            </Button>
+          </form>
+        </div>
+      </div>
+      <Footer />
+    </Layout>
+  );
+};
+
+export default jobseeker;
