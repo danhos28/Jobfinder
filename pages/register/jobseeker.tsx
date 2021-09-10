@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 // eslint-disable-next-line no-use-before-define
 import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -9,19 +10,19 @@ import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
 import Navbar from '../../components/Navbar';
 
-const jobseeker = () => {
-  const initialState = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    agree: '',
-  };
+interface IFormInputs {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  agree: boolean;
+}
 
-  const router = useRouter();
-  const [formData, setFormData] = useState(initialState);
+const jobseeker = () => {
+  const { register, handleSubmit } = useForm<IFormInputs>();
   const [passwordValidation, setPasswordValidation] = useState(false);
+  const router = useRouter();
   const url = 'http://localhost:5000/register/jobseeker';
 
   const signInAlert = (): void => {
@@ -36,20 +37,19 @@ const jobseeker = () => {
         toast.addEventListener('mouseleave', Swal.resumeTimer);
       },
     });
-
     Toast.fire({
       icon: 'success',
       title: 'Signed in successfully',
     });
   };
 
-  const registerJobseeker = async () => {
+  const registerEmployer = async (formData: IFormInputs) => {
     try {
       const response = await axios.post(url, formData);
       console.log(response);
       signInAlert();
-      router.push('/');
-    } catch (error) {
+      router.push('/dashboard');
+    } catch (error: any) {
       console.log(error.response.data.message);
       Swal.fire({
         icon: 'error',
@@ -59,25 +59,10 @@ const jobseeker = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.checked,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent): void => {
-    e.preventDefault();
+  const onSubmit: SubmitHandler<IFormInputs> = (formData: IFormInputs) => {
     if (formData.agree && formData.password === formData.confirmPassword) {
       setPasswordValidation(false);
-      registerJobseeker();
+      registerEmployer(formData);
     } else if (!formData.agree) {
       Swal.fire({
         icon: 'error',
@@ -99,50 +84,42 @@ const jobseeker = () => {
             Sign Up
           </h1>
           <form
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col justify-between mt-4 w-full h-full font-poppins text-sm"
           >
             <div className="flex justify-between w-full">
               <input
-                type="text"
                 placeholder="First Name"
                 className="input-text w-[48%]"
-                name="firstName"
-                onChange={handleChange}
                 required
+                {...register('firstName')}
               />
               <input
-                type="text"
                 placeholder="Last Name"
                 className="input-text w-[48%]"
-                name="lastName"
-                onChange={handleChange}
                 required
+                {...register('lastName')}
               />
             </div>
             <input
-              type="text"
               placeholder="Email"
               className="input-text w-full"
-              name="email"
-              onChange={handleChange}
               required
+              {...register('email')}
             />
             <input
               type="password"
               placeholder="Password"
               className="input-text w-full"
-              name="password"
-              onChange={handleChange}
               required
+              {...register('password')}
             />
             <input
               type="password"
               placeholder="Confirm Password"
               className="input-text w-full"
-              name="confirmPassword"
-              onChange={handleChange}
               required
+              {...register('confirmPassword')}
             />
             {passwordValidation ? (
               <p className="text-red-600">
@@ -150,12 +127,7 @@ const jobseeker = () => {
               </p>
             ) : null}
             <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="agree"
-                name="agree"
-                onChange={handleCheckbox}
-              />
+              <input type="checkbox" {...register('agree')} />
               <label htmlFor="agree" className="ml-2">
                 I agree to the
                 <span className="text-blue-600 cursor-pointer">
@@ -164,7 +136,6 @@ const jobseeker = () => {
                 </span>
               </label>
             </div>
-
             <Button variant="blue" type="submit">
               Sign Up
             </Button>

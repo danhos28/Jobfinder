@@ -13,8 +13,11 @@
     "next": "11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.14.2",
+    "react-markdown": "^7.0.1",
     "react-responsive-carousel": "^3.2.21",
-    "sweetalert2": "^11.1.4"
+    "sweetalert2": "^11.1.4",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@types/react": "17.0.19",

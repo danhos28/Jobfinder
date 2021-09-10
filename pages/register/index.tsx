@@ -84,7 +84,9 @@ const register = () => (
                 Create a<span className="italic font-bold"> recruiter </span>
                 account.
               </p>
-              <Button variant="green">START HIRING NOW</Button>
+              <Button variant="green">
+                <Link href="/register/employer">START HIRING NOW</Link>
+              </Button>
             </div>
           </div>
           <p className="mt-4 mx-4">

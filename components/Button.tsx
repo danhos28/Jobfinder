@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/require-default-props */
 // eslint-disable-next-line no-use-before-define
@@ -7,6 +8,7 @@ interface IProps {
   children: React.ReactNode;
   variant: string;
   type?: 'submit' | 'reset' | 'button';
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 interface IVariants {
@@ -17,7 +19,7 @@ interface IVariants {
 }
 
 const Button = (props: IProps) => {
-  const { children, variant, type = 'button' } = props;
+  const { children, variant, type = 'button', onClick } = props;
 
   const variants: IVariants = {
     red: 'bg-red-500 text-gray-50 hover:bg-red-600',
@@ -31,6 +33,7 @@ const Button = (props: IProps) => {
     <button
       type={type}
       className={`rounded-md py-3 px-6 ${pickedVariant} transition-all ease-in-out duration-200 cursor-pointer`}
+      onClick={onClick}
     >
       {children}
     </button>

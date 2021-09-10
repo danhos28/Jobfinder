@@ -1,9 +1,15 @@
+import type { AppProps } from 'next/app';
 import 'tailwindcss/tailwind.css';
 import '../styles/globals.css';
-
-import type { AppProps } from 'next/app';
+import ContextWrapper from '../components/ContextWrapper';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const loginStatus = false;
+
+  return (
+    <ContextWrapper loginStatus={loginStatus}>
+      <Component {...pageProps} />
+    </ContextWrapper>
+  );
 }
 export default MyApp;

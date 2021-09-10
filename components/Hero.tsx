@@ -78,7 +78,7 @@ const Hero = () => (
           </button>
         </div>
         <div className="flex justify-center items-center">
-          <Link href="/">
+          <Link href="/dashboard">
             <p className="cursor-pointer underline pt-4">
               See all available jobs
             </p>
