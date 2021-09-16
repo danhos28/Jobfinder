@@ -1,6 +1,11 @@
 import Link from 'next/link';
 
-const NavbarJobseeker = ({ username, logoutHandler }) => (
+interface IProps {
+  username: string;
+  logoutHandler: () => void;
+}
+
+const NavbarJobseeker = ({ username, logoutHandler }: IProps) => (
   <>
     <div className="sm:hidden px-4 cursor-pointer">
       <svg

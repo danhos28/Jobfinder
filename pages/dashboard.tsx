@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 // eslint-disable-next-line no-use-before-define
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import StateContext from '../contexts/StateContext';
 import Navbar from '../components/Navbar';
 import VacancyCard from '../components/VacancyCard';
@@ -13,6 +13,7 @@ interface IProps {
 }
 
 const dashboard: React.FC<IProps> = ({ vacancies }) => {
+  const [vacancyDelete, setVacancyDelete] = useState(false);
   const { isLoggedIn } = useContext<any>(StateContext);
   const jobCount = vacancies.length;
 
@@ -29,6 +30,8 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
       <div className="flex flex-col  bg-gray-200 h-auto w-3/4 border-[1px] font-poppins mb-32">
         {vacancies.map((vacancy) => (
           <VacancyCard
+            vacancyDelete={vacancyDelete}
+            setVacancyDelete={setVacancyDelete}
             vacancies={vacancy}
             key={vacancy.vacancy_id}
             isEmployer={false}

@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import StateContext from '../contexts/StateContext';
 import VacancyCard from '../components/VacancyCard';
-import Button from '../components/Button';
 import Navbar from '../components/Navbar';
 import Error from '../components/Error';
 import { IVacancies } from '../interfaces/IVacancies';
