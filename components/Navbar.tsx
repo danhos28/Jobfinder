@@ -21,7 +21,7 @@ const Navbar = () => {
   const [isLoggedOut, setIsLoggedOut] = useState(false);
   const cookies = new Cookies();
   const accessToken = cookies.get('accessToken');
-  const url = 'http://localhost:5000';
+  const url = process.env.NEXT_PUBLIC_URL;
 
   const instance = axios.create({
     withCredentials: true,

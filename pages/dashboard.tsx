@@ -44,7 +44,7 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
 };
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:5000/vacancy');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/vacancy`);
   const vacancies = await res.json();
 
   return {

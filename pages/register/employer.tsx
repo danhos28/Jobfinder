@@ -25,7 +25,7 @@ const employer = () => {
   const router = useRouter();
   const { register, handleSubmit } = useForm<IFormInputs>();
   const [passwordValidation, setPasswordValidation] = useState(false);
-  const url = 'http://localhost:5000/register/employer';
+  const url = `${process.env.NEXT_PUBLIC_URL}/register/employer`;
 
   const signInAlert = (): void => {
     const Toast = Swal.mixin({

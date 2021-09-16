@@ -22,8 +22,8 @@ interface IFormInputs {
 const login = () => {
   const cookies = new Cookies();
   const router = useRouter();
-  const urlJobseeker = 'http://localhost:5000/auth';
-  const urlEmployer = 'http://localhost:5000/auth/employer';
+  const urlJobseeker = `${process.env.NEXT_PUBLIC_URL}/auth`;
+  const urlEmployer = `${process.env.NEXT_PUBLIC_URL}/auth/employer`;
   const { register, handleSubmit } = useForm<IFormInputs>();
 
   const signInAlert = (): void => {

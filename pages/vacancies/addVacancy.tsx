@@ -17,7 +17,7 @@ const addVacancy = () => {
   const { register, handleSubmit } = useForm();
   const { isLoggedIn, userId } = useContext<any>(StateContext);
   const [data, setData] = useState<IVacancies | undefined>();
-  const url = 'http://localhost:5000/vacancy';
+  const url = `${process.env.NEXT_PUBLIC_URL}/vacancy`;
   const role = userId.split('-')[0];
 
   const onSubmit: SubmitHandler<IVacancies> = (formData, e) => {

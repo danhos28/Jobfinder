@@ -20,7 +20,7 @@ const VacancyCard = ({
 }: IProps) => {
   let day: string = 'Today';
 
-  const url = 'http://localhost:5000/images/';
+  const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   const d1: number = new Date().getTime();
   const d2: number = Date.parse(vacancies.job_createAt);
   const datePostedInTime: number = Math.abs(d2 - d1);
@@ -40,7 +40,7 @@ const VacancyCard = ({
 
   const deleteHandler = () => {
     axios
-      .delete(`http://localhost:5000/vacancy/${vacancies.vacancy_id}`)
+      .delete(`${process.env.NEXT_PUBLIC_URL}/vacancy/${vacancies.vacancy_id}`)
       .then(() => {
         console.log('delete success');
         setVacancyDelete(!vacancyDelete);

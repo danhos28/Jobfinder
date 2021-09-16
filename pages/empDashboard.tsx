@@ -20,7 +20,7 @@ const empDashboard = () => {
   };
 
   useEffect(() => {
-    const url = 'http://localhost:5000/vacancy/employer';
+    const url = `${process.env.NEXT_PUBLIC_URL}/vacancy/employer`;
     axios
       .post(url, {
         employer_id: userId,

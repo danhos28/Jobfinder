@@ -16,7 +16,7 @@ interface IProps {
 
 const VacancyDetail = ({ vacancy }: IProps) => {
   const router = useRouter();
-  const url = 'http://localhost:5000/images/';
+  const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   // const { id } = router.query;
 
   if (router.isFallback) {
@@ -202,7 +202,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
 export default VacancyDetail;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch('http://localhost:5000/vacancy');
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/vacancy`);
   const vacancies = await res.json();
 
   const paths = vacancies.map((vacancy: IVacancies) => ({
@@ -221,7 +221,7 @@ export const getStaticProps: GetStaticProps = async (
   context: any,
 ): Promise<GetStaticPropsResult<IProps>> => {
   const { id } = context.params;
-  const res = await fetch(`http://localhost:5000/vacancy/${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/vacancy/${id}`);
   const vacancy = await res.json();
 
   return {
