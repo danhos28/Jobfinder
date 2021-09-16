@@ -45,8 +45,7 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
 
 export async function getStaticProps() {
   const res = await fetch('http://localhost:5000/vacancy');
-  const data = await res.json();
-  const vacancies = JSON.stringify(data);
+  const vacancies = await res.json();
 
   return {
     props: {
