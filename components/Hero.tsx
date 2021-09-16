@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import Navbar from './Navbar';
 
 const Hero = () => (
   <div className="flex flex-col h-full w-auto bg-hero-pattern bg-cover bg-bottom font-poppins">
-    <div className="flex w-screen justify-between items-center px-4 pt-4 sm:px-8 text-blue-800">
+    <Navbar />
+    {/* <div className="flex w-screen justify-between items-center px-4 pt-4 sm:px-8 text-blue-800">
       <img
         src="/images/jobfinder_logo.png"
         alt="logo"
@@ -55,7 +57,7 @@ const Hero = () => (
           />
         </svg>
       </div>
-    </div>
+    </div> */}
     <div className="flex h-screen justify-center items-center">
       <div className="flex flex-col bg-gray-50 bg-opacity-90 p-8 sm:p-12 lg:p-16 rounded-md shadow-2xl font-poppins md:hover:scale-105 transform transition-all ease-in-out duration-200">
         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4">

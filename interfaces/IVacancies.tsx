@@ -11,7 +11,10 @@ export interface IVacancies {
   company: string;
   company_about: string;
   salary: string;
+  employment_type: string;
+  category: string;
   job_location: string;
   job_thumb: string;
+  image: string;
   job_createAt: string;
 }

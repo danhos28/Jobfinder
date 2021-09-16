@@ -13,8 +13,8 @@ interface IProps {
 }
 
 const dashboard: React.FC<IProps> = ({ vacancies }) => {
-  const jobCount = vacancies.length;
   const { isLoggedIn } = useContext<any>(StateContext);
+  const jobCount = vacancies.length;
 
   return (
     <div className="flex flex-col items-center bg-gray-50">
@@ -28,7 +28,11 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
 
       <div className="flex flex-col  bg-gray-200 h-auto w-3/4 border-[1px] font-poppins mb-32">
         {vacancies.map((vacancy) => (
-          <VacancyCard vacancies={vacancy} key={vacancy.vacancy_id} />
+          <VacancyCard
+            vacancies={vacancy}
+            key={vacancy.vacancy_id}
+            isEmployer={false}
+          />
         ))}
       </div>
       <Footer />

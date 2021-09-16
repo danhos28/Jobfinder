@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 // eslint-disable-next-line no-use-before-define
 import React, { useState, useEffect, useContext } from 'react';
 import Cookies from 'universal-cookie';
@@ -6,13 +7,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import axios from 'axios';
 import StateContext from '../contexts/StateContext';
+import NavbarJobseeker from './NavbarJobseeker';
+import NavbarEmployer from './NavbarEmployer';
 
 const Navbar = () => {
   const { asPath } = useRouter();
   const router = useRouter();
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { isLoggedIn, setIsLoggedIn } = useContext<any>(StateContext);
+  const { isLoggedIn, setIsLoggedIn, setUserId } =
+    useContext<any>(StateContext);
   const [username, setUsername] = useState('');
+  const [role, setRole] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedOut, setIsLoggedOut] = useState(false);
   const cookies = new Cookies();
   const accessToken = cookies.get('accessToken');
   const url = 'http://localhost:5000';
@@ -30,9 +36,12 @@ const Navbar = () => {
       .post('isVerify', null, headersConfig)
       .then((res) => {
         setIsLoggedIn(true);
-        const { newAccessToken } = res.data;
-        console.log(res.data);
+        setIsLoading(false);
         setUsername(res.data.jobseeker.name);
+        setUserId(res.data.jobseeker.user_id);
+        setRole(res.data.jobseeker.user_id.split('-')[0]);
+
+        const { newAccessToken } = res.data;
 
         if (newAccessToken) {
           cookies.set('accessToken', newAccessToken, {
@@ -44,16 +53,77 @@ const Navbar = () => {
       .catch(() => {
         setIsLoggedIn(false);
       });
-  }, [isLoggedIn]);
+  }, [isLoggedIn, isLoggedOut]);
 
   const logoutHandler = () => {
     instance
       .get('logout')
       .then(() => {
         cookies.remove('accessToken');
+        setIsLoggedOut(!isLoggedOut);
         router.push('/');
       })
       .catch((err) => console.log(err));
+  };
+
+  const renderNavbar = () => {
+    if (isLoggedIn) {
+      if (!isLoading) {
+        if (role === 'employer') {
+          return (
+            <NavbarEmployer username={username} logoutHandler={logoutHandler} />
+          );
+        }
+        return (
+          <NavbarJobseeker username={username} logoutHandler={logoutHandler} />
+        );
+      }
+      return null;
+    }
+    return (
+      <div className="flex justify-between items-center h-full w-auto  ">
+        <Link href="/">
+          <p className="px-2 sm:px-4 cursor-pointer hover:underline">Home</p>
+        </Link>
+        <Link href="/register">
+          <p
+            className={
+              asPath === '/register'
+                ? 'navbar-link-active'
+                : 'bg-white px-2 sm:px-4 cursor-pointer'
+            }
+          >
+            Sign Up
+          </p>
+        </Link>
+
+        <Link href="/login">
+          <div
+            className={
+              asPath === '/login'
+                ? 'navbar-link-active flex gap-1'
+                : 'bg-white px-2 sm:px-4 cursor-pointer flex gap-1'
+            }
+          >
+            <p>Sign In</p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+              />
+            </svg>
+          </div>
+        </Link>
+      </div>
+    );
   };
 
   return (
@@ -69,96 +139,7 @@ const Navbar = () => {
           <Link href="/">Jobfinder</Link>
         </div>
       </div>
-      {isLoggedIn ? (
-        <>
-          <div className="sm:hidden px-4 cursor-pointer">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </div>
-          <div className="hidden justify-between items-center h-full sm:flex sm:w-8/12 md:w-7/12">
-            <Link href="/">
-              <p className="px-2 sm:px-4 cursor-pointer hover:underline">
-                Home
-              </p>
-            </Link>
-            <Link href="/application">
-              <p className="hover:underline cursor-pointer">Application</p>
-            </Link>
-            <Link href="/savedJobs">
-              <p className="hover:underline cursor-pointer">Saved Jobs</p>
-            </Link>
-            <Link href="/profile">
-              <p className="hover:underline cursor-pointer capitalize">
-                {username}
-              </p>
-            </Link>
-            <button
-              type="button"
-              className="hover:underline cursor-pointer"
-              onClick={logoutHandler}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                />
-              </svg>
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="flex justify-between items-center h-full w-auto  ">
-            <Link href="/">
-              <p className="px-2 sm:px-4 cursor-pointer hover:underline">
-                Home
-              </p>
-            </Link>
-            <Link href="/register">
-              <p
-                className={
-                  asPath === '/register'
-                    ? 'navbar-link-active'
-                    : 'bg-white px-2 sm:px-4 cursor-pointer'
-                }
-              >
-                Sign Up
-              </p>
-            </Link>
-            <Link href="/login">
-              <p
-                className={
-                  asPath === '/login'
-                    ? 'navbar-link-active'
-                    : 'bg-white px-2 sm:px-4 cursor-pointer'
-                }
-              >
-                Sign In
-              </p>
-            </Link>
-          </div>
-        </>
-      )}
+      {renderNavbar()}
     </nav>
   );
 };

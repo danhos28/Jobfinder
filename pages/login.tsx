@@ -22,7 +22,8 @@ interface IFormInputs {
 const login = () => {
   const cookies = new Cookies();
   const router = useRouter();
-  const url = 'http://localhost:5000/auth';
+  const urlJobseeker = 'http://localhost:5000/auth';
+  const urlEmployer = 'http://localhost:5000/auth/employer';
   const { register, handleSubmit } = useForm<IFormInputs>();
 
   const signInAlert = (): void => {
@@ -43,7 +44,7 @@ const login = () => {
     });
   };
 
-  const jobseekerLogin = (formData: IFormInputs) => {
+  const userLogin = (formData: IFormInputs, url: string, route: string) => {
     axios
       .post(url, formData, { withCredentials: true })
       .then((res) => {
@@ -55,7 +56,7 @@ const login = () => {
           // maxAge: 10,
           sameSite: 'strict',
         });
-        router.push('/dashboard');
+        router.push(route);
       })
       .catch(() => {
         Swal.fire({
@@ -66,14 +67,12 @@ const login = () => {
       });
   };
 
-  const employerLogin = (formData: IFormInputs) => {};
-
   const onSubmit: SubmitHandler<IFormInputs> = (formData: IFormInputs, e) => {
     e?.preventDefault();
     if (formData.employer) {
-      employerLogin(formData);
+      userLogin(formData, urlEmployer, '/empDashboard');
     } else {
-      jobseekerLogin(formData);
+      userLogin(formData, urlJobseeker, '/dashboard');
     }
   };
 
@@ -104,13 +103,13 @@ const login = () => {
                 {...register('password')}
               />
               <div className="flex items-center ">
-                <input type="checkbox" {...register('employer')} />
+                <input type="checkbox" id="role" {...register('employer')} />
                 <label htmlFor="role" className="ml-2">
                   Employer?
                 </label>
               </div>
               <div className="flex items-center justify-start">
-                <input type="checkbox" {...register('checked')} />
+                <input type="checkbox" id="agree" {...register('checked')} />
                 <div className="flex flex-row justify-between items-center w-full">
                   <label htmlFor="agree" className="ml-2">
                     Remember me
