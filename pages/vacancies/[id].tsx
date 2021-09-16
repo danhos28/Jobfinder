@@ -203,7 +203,8 @@ export default VacancyDetail;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await fetch('http://localhost:5000/vacancy');
-  const vacancies = await res.json();
+  const data = await res.json();
+  const vacancies = JSON.parse(JSON.stringify(data));
 
   const paths = vacancies.map((vacancy: IVacancies) => ({
     params: {
@@ -222,7 +223,8 @@ export const getStaticProps: GetStaticProps = async (
 ): Promise<GetStaticPropsResult<IProps>> => {
   const { id } = context.params;
   const res = await fetch(`http://localhost:5000/vacancy/${id}`);
-  const vacancy = await res.json();
+  const data = await res.json();
+  const vacancy = JSON.parse(JSON.stringify(data));
 
   return {
     props: {
