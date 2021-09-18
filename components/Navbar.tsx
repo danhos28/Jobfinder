@@ -11,10 +11,11 @@ import NavbarJobseeker from './NavbarJobseeker';
 import NavbarEmployer from './NavbarEmployer';
 
 const Navbar = () => {
-  const { asPath } = useRouter();
+  // const { asPath } = useRouter();
   const router = useRouter();
   const { isLoggedIn, setIsLoggedIn, setUserId } =
     useContext<any>(StateContext);
+  const [hamburgerClick, setHamburgerClick] = useState(false);
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -81,64 +82,110 @@ const Navbar = () => {
       return null;
     }
     return (
-      <div className="flex justify-between items-center h-full w-auto  ">
-        <Link href="/">
-          <p className="px-2 sm:px-4 cursor-pointer hover:underline">Home</p>
-        </Link>
-        <Link href="/register">
-          <p
-            className={
-              asPath === '/register'
-                ? 'navbar-link-active'
-                : 'bg-white px-2 sm:px-4 cursor-pointer'
-            }
-          >
-            Sign Up
-          </p>
-        </Link>
+      <div className="flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 absolute right-8 top-4 block sm:hidden cursor-pointer"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          onClick={() => setHamburgerClick(!hamburgerClick)}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+        <div
+          className={
+            hamburgerClick
+              ? 'flex '
+              : 'hidden sm:flex justify-between h-full w-auto'
+          }
+        >
+          <ul className="flex flex-col sm:flex-row list-none bg-gray-50 sm:bg-white w-screen sm:w-auto text-center shadow-md sm:shadow-none">
+            <li className="li-navbar">
+              <div className="flex justify-center items-center gap-1">
+                <Link href="/">Home</Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                  />
+                </svg>
+              </div>
+            </li>
 
-        <Link href="/login">
-          <div
-            className={
-              asPath === '/login'
-                ? 'navbar-link-active flex gap-1'
-                : 'bg-white px-2 sm:px-4 cursor-pointer flex gap-1'
-            }
-          >
-            <p>Sign In</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-          </div>
-        </Link>
+            <li className="li-navbar">
+              <div className="flex justify-center items-center gap-1">
+                <Link href="/register">Sign Up</Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                  />
+                </svg>
+              </div>
+            </li>
+
+            <li className="li-navbar">
+              <div className="flex justify-center items-center gap-1">
+                <Link href="/login">Login</Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                  />
+                </svg>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   };
 
   return (
-    <nav className="flex justify-between fixed z-50 items-center font-poppins font-bold text-blue-900 h-[60px] w-screen bg-white shadow-sm px-4 sm:px-8 md:px-14 lg:px-24 xl:px-36">
-      <div className="flex justify-between items-center w-auto">
-        <Image
-          src="/images/jobfinder_logo.png"
-          width={40}
-          height={40}
-          alt="logo"
-        />
-        <div className="hidden lg:block lg:ml-4 font-bold text-blue-800">
-          <Link href="/">Jobfinder</Link>
-        </div>
+    <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center fixed z-50 font-poppins font-bold text-blue-900 h-[60px] w-screen bg-white shadow-sm sm:px-8 md:px-14 lg:px-24 xl:px-36">
+      <div className="flex items-center w-auto ml-8 mt-2 sm:mt-0">
+        <Link href="/">
+          <div>
+            <Image
+              src="/images/jobfinder_logo.png"
+              width={40}
+              height={40}
+              alt="logo"
+            />
+          </div>
+        </Link>
       </div>
+
       {renderNavbar()}
     </nav>
   );

@@ -49,3 +49,7 @@ ul {
   padding-left: 20px;
   list-style: disc;
 }
+
+.li-navbar {
+  @apply block px-2 sm:px-4 py-4 sm:py-0 cursor-pointer hover:underline;
+}

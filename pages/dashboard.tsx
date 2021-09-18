@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-one-expression-per-line */
 // eslint-disable-next-line no-use-before-define
-import React, { useContext, useState } from 'react';
-import StateContext from '../contexts/StateContext';
+import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import VacancyCard from '../components/VacancyCard';
 import SearchBar from '../components/SearchBar';
@@ -14,20 +13,18 @@ interface IProps {
 
 const dashboard: React.FC<IProps> = ({ vacancies }) => {
   const [vacancyDelete, setVacancyDelete] = useState(false);
-  const { isLoggedIn } = useContext<any>(StateContext);
   const jobCount = vacancies.length;
 
   return (
     <div className="flex flex-col items-center bg-gray-50">
       <Navbar />
       <SearchBar />
-      <div className="flex justify-between items-center mt-[40px] mb-2 w-3/4">
+      <div className="flex justify-between items-center mt-[40px] mb-2 w-full sm:w-3/4 px-4">
         <p>{jobCount} jobs found</p>
         <p>Sorted by: Newest</p>
-        <p>login status: {isLoggedIn.toString()}</p>
       </div>
 
-      <div className="flex flex-col  bg-gray-200 h-auto w-3/4 border-[1px] font-poppins mb-32">
+      <div className="flex flex-col h-auto w-[95vw] sm:w-[90vw] md:w-3/4 border-[1px] font-poppins mb-32">
         {vacancies.map((vacancy) => (
           <VacancyCard
             vacancyDelete={vacancyDelete}

@@ -50,22 +50,36 @@ const VacancyCard = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between items-center w-full h-[150px] bg-white pr-8">
+      <div className="flex justify-between items-center w-full h-[100px] sm:h-[150px] bg-white pr-2 sm:pr-8 gap-2">
         <div className="flex items-center">
-          <Image
-            loader={() => src}
-            src={src}
-            width={150}
-            height={150}
-            unoptimized
-          />
+          <div className="block sm:hidden">
+            <Image
+              loader={() => src}
+              src={src}
+              width={100}
+              height={100}
+              unoptimized
+              layout="fixed"
+            />
+          </div>
+          <div className="hidden sm:block">
+            <Image
+              loader={() => src}
+              src={src}
+              width={150}
+              height={150}
+              unoptimized
+              layout="fixed"
+            />
+          </div>
+
           <div className="flex flex-col justify-center items-start ml-4 h-1/2">
-            <div className="font-bold text-lg cursor-pointer hover:underline">
+            <div className="font-bold text-md cursor-pointer hover:underline">
               <Link href={`/vacancies/${vacancies.vacancy_id}`}>
                 {vacancies.job_title}
               </Link>
             </div>
-            <div className="text-sm font-poppins">
+            <div className="text-xs sm:text-sm font-poppins">
               <p>{vacancies.company}</p>
               <p>{vacancies.job_location}</p>
               {datePostedInDays ? (
@@ -99,25 +113,27 @@ const VacancyCard = ({
           </div>
         )}
         {!isEmployer && (
-          <Button variant="green" type="button">
-            <div className="flex justify-center gap-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                />
-              </svg>
-              SAVE
-            </div>
-          </Button>
+          <div className="hidden sm:block">
+            <Button variant="green" type="button">
+              <div className="flex justify-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
+                SAVE
+              </div>
+            </Button>
+          </div>
         )}
       </div>
       <div className="h-[1px]" />

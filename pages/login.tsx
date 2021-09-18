@@ -80,14 +80,14 @@ const login = () => {
     <Layout title="Jobfinder: Find your dream job">
       <div>
         <Navbar />
-        <div className="flex   justify-center items-center w-screen h-screen bg-gray-100 ">
-          <div className="flex flex-col  items-center mt-60px bg-white sm:rounded-lg sm:shadow-md px-10 sm:px-14 lg:px-16 xl:px-20 2xl:px-28 2xl:py-20 py-14 h-3/4 max-h-[600px] w-[90vw] sm:w-[60vw] md:w-[50vw] lg:w-[40vw]">
+        <div className="flex justify-center items-center w-screen h-full py-20 bg-gray-100 ">
+          <div className="flex flex-col items-center mt-60px bg-white sm:rounded-lg rounded-md sm:shadow-md px-10 sm:px-14 lg:px-16 xl:px-20 2xl:px-28 2xl:py-20 py-14 h-3/4 max-h-[600px] min-h-[600px] w-[90vw] sm:w-[60vw] md:w-[50vw] lg:w-[40vw]">
             <h1 className="font-poppins font-bold text-lg 2xl:text-xl mb-6 2xl:mb-11">
               Sign In
             </h1>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col justify-between mt-4 w-full h-full font-poppins text-sm"
+              className="flex flex-col gap-4 justify-between mt-4 w-full h-full font-poppins text-sm"
             >
               <input
                 placeholder="Email"
