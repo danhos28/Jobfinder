@@ -2,7 +2,7 @@ import Link from 'next/link';
 import '../styles/Home.module.css';
 
 const Footer = () => (
-  <div className="flex flex-col bg-blue-900 h-[80vh] w-screen font-poppins justify-evenly px-24">
+  <div className="flex flex-col bg-blue-900 h-full py-10 sm:py-0 sm:h-[80vh] w-screen font-poppins justify-evenly px-8 sm:px-24">
     <div className="flex flex-col">
       <img
         src="/images/jobfinder_logo.png"
@@ -13,7 +13,7 @@ const Footer = () => (
         We transform the way candidates find jobs and companies hire talent.
       </p>
     </div>
-    <div className="flex flex-row justify-between h-2/4 w-4/6 text-gray-200 ">
+    <div className="flex flex-col sm:flex-row justify-between h-2/4 w-4/6 text-gray-200 gap-6">
       <div className="flex flex-col justify-around">
         <h2 className="font-bold mb-4">Candidates</h2>
         <Link href="/">Sign Up</Link>

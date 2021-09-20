@@ -33,21 +33,21 @@ const empDashboard = () => {
   const renderDashboard = () => {
     if (isLoggedIn && role === 'employer') {
       return (
-        <div className="flex flex-col pt-[80px] gap-4 px-8 pb-12 bg-gray-50">
+        <div className="flex flex-col pt-[80px] gap-4 px-0 sm:px-8 pb-12 bg-gray-50">
           <button
             type="button"
             onClick={addJobHandler}
-            className="max-w-[150px] bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-400"
+            className="max-w-[150px] ml-4 sm:ml-0 bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-400"
           >
             Post a New Job
           </button>
 
-          <div className="flex w-full gap-6 ">
-            <div className="flex flex-col w-[60%]">
+          <div className="flex flex-col md:flex-row w-full gap-6">
+            <div className="flex flex-col w-full md:w-[60%]">
               <p className="flex justify-center items-center font-bold bg-white border-[1px] px-2 py-1 max-w-[120px]">
                 My vacancy
               </p>
-              <div className="flex flex-col h-[450px] border-[1px] bg-gray-100">
+              <div className="flex flex-col min-h-[450px] border-[1px] bg-gray-100">
                 {data.map((vacancy: IVacancies) => (
                   <div key={vacancy.vacancy_id}>
                     <VacancyCard
@@ -62,11 +62,11 @@ const empDashboard = () => {
               </div>
             </div>
 
-            <div className="flex flex-col w-[40%] ">
+            <div className="flex flex-col w-full md:w-[40%] ">
               <p className="flex justify-center items-center font-bold bg-white border-[1px] px-2 py-1 max-w-[120px]">
                 Applicant
               </p>
-              <div className="flex justify-center items-center h-[450px] bg-gray-100 border-[1px] w-full text-xl font-bold text-gray-400">
+              <div className="flex justify-center items-center min-h-[450px] bg-gray-100 border-[1px] w-full text-xl font-bold text-gray-400">
                 <p>No applicant yet</p>
               </div>
             </div>

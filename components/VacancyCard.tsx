@@ -96,7 +96,7 @@ const VacancyCard = ({
 
         {isEmployer && (
           <div className="flex flex-col items-end text-lg font-semibold">
-            <div className="hover:underline cursor-pointer text-green-600">
+            <div className="hover:underline cursor-pointer text-green-600 text-sm sm:text-md">
               <Link
                 href={`/vacancies/addVacancy/?status=edit&id=${vacancies.vacancy_id}`}
               >
@@ -105,7 +105,7 @@ const VacancyCard = ({
             </div>
             <button
               type="button"
-              className="hover:underline font-semibold text-red-600"
+              className="hover:underline font-semibold text-red-600 text-sm sm:text-md"
               onClick={deleteHandler}
             >
               Delete
