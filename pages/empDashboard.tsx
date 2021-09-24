@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 import StateContext from '../contexts/StateContext';
 import VacancyCard from '../components/VacancyCard';
 import Navbar from '../components/Navbar';
 import Error from '../components/Error';
 import { IVacancies } from '../interfaces/IVacancies';
 import Footer from '../components/Footer';
+import Layout from '../components/Layout';
 
 const empDashboard = () => {
   const { isLoggedIn, userId } = useContext<any>(StateContext);
@@ -14,20 +15,21 @@ const empDashboard = () => {
   const [vacancyDelete, setVacancyDelete] = useState(false);
   const router = useRouter();
   const role = userId.split('-')[0];
+  const url = `${process.env.NEXT_PUBLIC_URL}/vacancy/employer`;
 
   const addJobHandler = () => {
     router.push('/vacancies/addVacancy');
   };
 
   useEffect(() => {
-    const url = `${process.env.NEXT_PUBLIC_URL}/vacancy/employer`;
     axios
       .post(url, {
         employer_id: userId,
       })
       .then((res) => {
         setData(res.data);
-      });
+      })
+      .catch((err) => console.log(err));
   }, [userId, vacancyDelete]);
 
   const renderDashboard = () => {
@@ -37,7 +39,7 @@ const empDashboard = () => {
           <button
             type="button"
             onClick={addJobHandler}
-            className="max-w-[150px] ml-4 sm:ml-0 bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-400"
+            className="max-w-[150px] ml-4 sm:ml-0 bg-green-500 px-4 py-2 text-white rounded-md hover:bg-green-400 font-poppins text-sm font-black"
           >
             Post a New Job
           </button>
@@ -79,9 +81,11 @@ const empDashboard = () => {
 
   return (
     <>
-      <Navbar />
-      {renderDashboard()}
-      <Footer />
+      <Layout title="Jobfinder: Find your dream job">
+        <Navbar />
+        {renderDashboard()}
+        <Footer />
+      </Layout>
     </>
   );
 };

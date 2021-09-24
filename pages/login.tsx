@@ -121,7 +121,7 @@ const login = () => {
               </div>
 
               <Button variant="blue" type="submit">
-                Sign Up
+                Login
               </Button>
 
               <div className="flex w-full items-center text-gray-400">

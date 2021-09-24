@@ -11,10 +11,9 @@ import NavbarJobseeker from './NavbarJobseeker';
 import NavbarEmployer from './NavbarEmployer';
 
 const Navbar = () => {
-  // const { asPath } = useRouter();
-  const router = useRouter();
   const { isLoggedIn, setIsLoggedIn, setUserId } =
     useContext<any>(StateContext);
+  const router = useRouter();
   const [hamburgerClick, setHamburgerClick] = useState(false);
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
@@ -172,16 +171,17 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center fixed z-50 font-poppins font-bold text-blue-900 h-[60px] w-screen bg-white shadow-sm sm:px-8 md:px-14 lg:px-24 xl:px-36">
-      <div className="flex items-center w-auto ml-8 mt-2 sm:mt-0">
+    <nav className="flex flex-col sm:flex-row justify-between items-start sm:items-center fixed z-50 font-poppins text-md font-bold text-blue-900 h-[60px] w-screen bg-white shadow-sm sm:px-6 md:px-14 lg:px-24 xl:px-36">
+      <div className="flex items-center w-auto ml-8 sm:ml-0 mt-2 sm:mt-0">
         <Link href="/">
-          <div>
+          <div className="flex gap-4 items-center">
             <Image
               src="/images/jobfinder_logo.png"
               width={40}
               height={40}
               alt="logo"
             />
+            <p className="hidden sm:block">Jobfinder</p>
           </div>
         </Link>
       </div>

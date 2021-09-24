@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import StateContext from '../contexts/StateContext';
 
 interface IProps {
   username: string;
@@ -7,6 +8,7 @@ interface IProps {
 }
 
 const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
+  const { userId } = useContext<any>(StateContext);
   const [hamburgerClick, setHamburgerClick] = useState(false);
   return (
     <div className="flex items-center">
@@ -42,11 +44,11 @@ const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
-            <Link href="/savedjob">Saved Jobs</Link>
+            <Link href="/savedjob">My Jobs</Link>
           </li>
 
           <li className="li-navbar">
-            <Link href="/profile">
+            <Link href={`/profile/?id=${userId}`}>
               <p className="hover:underline cursor-pointer capitalize">
                 {username}
               </p>

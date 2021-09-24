@@ -12,12 +12,14 @@ const register = () => (
     <div>
       <Navbar />
       <div className="flex justify-evenly items-center bg-layer-three w-screen h-full bg-bottom font-poppins">
-        <div className="flex flex-col justify-between mt-[calc(60px+5vh)] mb-[6vh] pb-8 items-center w-5/6 sm:w-3/4 h-[90vh] bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="flex flex-col justify-between mt-[calc(60px+5vh)] mb-[6vh] pb-8 items-center w-[90vw] sm:w-3/4 h-[90vh] max-h-[800px] bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="flex flex-col justify-around items-center bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 px-4 py-2 text-gray-50 w-full h-1/6">
-            <h1 className="text-xl font-bold sm:text-2xl">
+            <h1 className="text-base font-bold sm:text-2xl">
               We're glad you're here!
             </h1>
-            <p>First of all, what do you want to do?</p>
+            <p className="text-sm sm:text-base">
+              First of all, what do you want to do?
+            </p>
           </div>
 
           <div className="flex flex-col md:flex-row w-11/12 h-full pt-6">
@@ -42,7 +44,11 @@ const register = () => (
                 I'm looking for work
               </h2>
               <p className="mb-4">
-                Create a<span className="italic font-bold"> jobseeker </span>
+                Create a
+                <span className="italic font-bold text-sm sm:text-md">
+                  {' '}
+                  jobseeker{' '}
+                </span>
                 account.
               </p>
               <Button variant="blue">
@@ -81,7 +87,11 @@ const register = () => (
                 I'm looking to hire
               </h2>
               <p className="mb-4">
-                Create a<span className="italic font-bold"> recruiter </span>
+                Create a
+                <span className="italic font-bold text-sm sm:text-md">
+                  {' '}
+                  recruiter{' '}
+                </span>
                 account.
               </p>
               <Button variant="green">
@@ -89,7 +99,7 @@ const register = () => (
               </Button>
             </div>
           </div>
-          <p className="mt-4 mx-4">
+          <p className="mt-4 mx-4 text-sm sm:text-md">
             Already have an account?{' '}
             <span className="text-blue-700 cursor-pointer hover:underline font-bold">
               <Link href="/login">Log in.</Link>

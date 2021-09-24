@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -49,8 +50,8 @@ const VacancyCard = ({
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="flex justify-between items-center w-full h-[100px] sm:h-[150px] bg-white pr-2 sm:pr-8 gap-2">
+    <div className="flex flex-col font-poppins text-xs sm:text-sm">
+      <div className="flex justify-between items-center w-full h-full box-border bg-white pr-2 sm:pr-8 gap-2">
         <div className="flex items-center">
           <div className="block sm:hidden">
             <Image
@@ -79,7 +80,7 @@ const VacancyCard = ({
                 {vacancies.job_title}
               </Link>
             </div>
-            <div className="text-xs sm:text-sm font-poppins">
+            <div>
               <p>{vacancies.company}</p>
               <p>{vacancies.job_location}</p>
               {datePostedInDays ? (
@@ -96,7 +97,7 @@ const VacancyCard = ({
 
         {isEmployer && (
           <div className="flex flex-col items-end text-lg font-semibold">
-            <div className="hover:underline cursor-pointer text-green-600 text-sm sm:text-md">
+            <div className="hover:underline cursor-pointer text-green-600 text-xs sm:text-sm">
               <Link
                 href={`/vacancies/addVacancy/?status=edit&id=${vacancies.vacancy_id}`}
               >
@@ -105,7 +106,7 @@ const VacancyCard = ({
             </div>
             <button
               type="button"
-              className="hover:underline font-semibold text-red-600 text-sm sm:text-md"
+              className="hover:underline font-semibold text-red-600 text-xs sm:text-sm"
               onClick={deleteHandler}
             >
               Delete
@@ -114,21 +115,19 @@ const VacancyCard = ({
         )}
         {!isEmployer && (
           <div className="hidden sm:block">
-            <Button variant="green" type="button">
-              <div className="flex justify-center gap-1">
+            <Button
+              variant="green"
+              type="button"
+              style="bg-white border-2 text-green-700 border-green-600 hover:text-white font-bold px-3"
+            >
+              <div className="flex justify-center items-center gap-1">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                  className="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
+                  <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
                 </svg>
                 SAVE
               </div>

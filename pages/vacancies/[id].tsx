@@ -29,7 +29,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   }
 
   return (
-    <Layout title="Job detail">
+    <Layout title={`Jobfinder: ${vacancy.job_title}`}>
       <Navbar />
       <div className="flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-[full] w-screen bg-gray-100">
         <div className="flex flex-col items-center justify-start w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden">
@@ -56,7 +56,9 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                       unoptimized
                     />
                   </div>
-                  <p className="font-bold text-xl">{vacancy.job_title}</p>
+                  <p className="font-bold text-md uppercase font-poppins">
+                    {vacancy.job_title}
+                  </p>
                   <p className="mb-4 block sm:hidden">{vacancy.company}</p>
                 </div>
                 <p className="mb-4 hidden sm:block">{vacancy.company}</p>
@@ -68,17 +70,11 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                     <div className="flex items-center justify-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                        />
+                        <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
                       </svg>
                       SAVE
                     </div>
@@ -133,14 +129,18 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                   d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <p className="ml-2 hidden sm:block">{vacancy.job_location}</p>
+              <p className="ml-2 hidden text-sm sm:text-md sm:block">
+                {vacancy.job_location}
+              </p>
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 w-full py-6 px-4 sm:px-12">
-            <h1 className="font-semibold text-md mb-1">Job Descriptions</h1>
+          <div className="flex flex-col gap-4 w-full py-6 px-4 sm:px-12 text-sm">
+            <h1 className="font-semibold text-md mb-1 uppercase">
+              Job Descriptions
+            </h1>
             <ReactMarkdown children={vacancy.job_desc} />
-            <h1 className="font-semibold text-md mb-2">
+            <h1 className="font-semibold text-md mb-2 uppercase">
               Minimum Qualifications
             </h1>
             <ReactMarkdown children={vacancy.job_qualifications} />

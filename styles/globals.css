@@ -33,6 +33,12 @@ a {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.bg-layer-profile {
+  background-image: url('/images/layered-profile.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .navbar-link-active {
   @apply bg-blue-500 text-gray-50 h-full flex items-center px-2 sm:px-4 cursor-pointer;
 }
@@ -42,7 +48,7 @@ a {
 }
 
 .textarea {
-  @apply w-full h-16 bg-gray-50 py-2 px-2;
+  @apply w-full h-28 bg-gray-50 p-2;
 }
 
 ul {
@@ -52,4 +58,20 @@ ul {
 
 .li-navbar {
   @apply block px-2 sm:px-4 py-4 sm:py-0 cursor-pointer hover:underline;
+}
+
+::-webkit-file-upload-button {
+  color: white;
+  background: #247a3a;
+  padding: 10px;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  cursor: pointer;
+}
+
+::-webkit-file-upload-button:hover {
+  background: #059629;
+  transition: all;
+  transition-duration: 100ms;
 }

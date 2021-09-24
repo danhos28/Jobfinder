@@ -9,6 +9,7 @@ interface IProps {
   variant: string;
   type?: 'submit' | 'reset' | 'button';
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  style?: string;
 }
 
 interface IVariants {
@@ -19,7 +20,7 @@ interface IVariants {
 }
 
 const Button = (props: IProps) => {
-  const { children, variant, type = 'button', onClick } = props;
+  const { children, variant, type = 'button', onClick, style } = props;
 
   const variants: IVariants = {
     red: 'bg-red-500 text-gray-50 hover:bg-red-600',
@@ -32,7 +33,7 @@ const Button = (props: IProps) => {
   return (
     <button
       type={type}
-      className={`rounded-md py-3 px-6 ${pickedVariant} transition-all ease-in-out duration-200 cursor-pointer`}
+      className={`rounded-md py-3 px-6 ${pickedVariant} transition-all ease-in-out duration-200 cursor-pointer ${style}`}
       onClick={onClick}
     >
       {children}

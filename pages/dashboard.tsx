@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import VacancyCard from '../components/VacancyCard';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
+import Layout from '../components/Layout';
 import { IVacancies } from '../interfaces/IVacancies';
 
 interface IProps {
@@ -16,27 +17,29 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
   const jobCount = vacancies.length;
 
   return (
-    <div className="flex flex-col items-center bg-gray-50">
-      <Navbar />
-      <SearchBar />
-      <div className="flex justify-between items-center mt-[40px] mb-2 w-full sm:w-3/4 px-4">
-        <p>{jobCount} jobs found</p>
-        <p>Sorted by: Newest</p>
-      </div>
+    <Layout title="Jobfinder: Dashboard">
+      <div className="flex flex-col items-center bg-gray-50">
+        <Navbar />
+        <SearchBar />
+        <div className="flex justify-between items-center mt-[40px] mb-2 w-full sm:w-3/4 px-4 font-poppins text-sm">
+          <p>{jobCount} jobs found</p>
+          <p>Sorted by: Newest</p>
+        </div>
 
-      <div className="flex flex-col h-auto w-[95vw] sm:w-[90vw] md:w-3/4 border-[1px] font-poppins mb-32">
-        {vacancies.map((vacancy) => (
-          <VacancyCard
-            vacancyDelete={vacancyDelete}
-            setVacancyDelete={setVacancyDelete}
-            vacancies={vacancy}
-            key={vacancy.vacancy_id}
-            isEmployer={false}
-          />
-        ))}
+        <div className="flex flex-col h-auto w-[95vw] sm:w-[90vw] md:w-3/4 border-[1px] mb-32">
+          {vacancies.map((vacancy) => (
+            <VacancyCard
+              vacancyDelete={vacancyDelete}
+              setVacancyDelete={setVacancyDelete}
+              vacancies={vacancy}
+              key={vacancy.vacancy_id}
+              isEmployer={false}
+            />
+          ))}
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
