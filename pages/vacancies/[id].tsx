@@ -202,8 +202,9 @@ const VacancyDetail = ({ vacancy }: IProps) => {
 export default VacancyDetail;
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/vacancy`);
-  const vacancies = await res.json();
+  const url = process.env.NEXT_PUBLIC_URL;
+  const res = await fetch(`${url}/vacancy`);
+  const vacancies: IVacancies[] = await res.json();
 
   const paths = vacancies.map((vacancy: IVacancies) => ({
     params: {
