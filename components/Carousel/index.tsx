@@ -25,46 +25,16 @@ const Carousels = () => (
       className="w-80 sm:w-96 xl:w-3/4 lg:w-auto rounded-lg overflow-hidden max-w-screen-lg lg:mb-0"
     >
       <div className="flex flex-col lg:flex-row justify-evenly">
-        <Card
-          src="/images/carousel-1.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
-        <Card
-          src="/images/carousel-2.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
+        <Card src="/images/carousel-1.jpg" content="Lorem Ipsum Lorem" />
+        <Card src="/images/carousel-2.jpg" content="Lorem Ipsum Lorem" />
       </div>
       <div className="flex flex-col lg:flex-row justify-evenly">
-        <Card
-          src="/images/carousel-3.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
-        <Card
-          src="/images/carousel-4.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
+        <Card src="/images/carousel-3.jpg" content="Lorem Ipsum Lorem" />
+        <Card src="/images/carousel-4.jpg" content="Lorem Ipsum Lorem" />
       </div>
       <div className="flex flex-col lg:flex-row justify-evenly">
-        <Card
-          src="/images/carousel-5.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
-        <Card
-          src="/images/carousel-6.jpg"
-          width={450}
-          height={300}
-          content="Lorem Ipsum Lorem"
-        />
+        <Card src="/images/carousel-5.jpg" content="Lorem Ipsum Lorem" />
+        <Card src="/images/carousel-6.jpg" content="Lorem Ipsum Lorem" />
       </div>
     </Carousel>
     <Quotes

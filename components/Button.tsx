@@ -26,6 +26,7 @@ const Button = (props: IProps) => {
     red: 'bg-red-500 text-gray-50 hover:bg-red-600',
     green: 'bg-green-500 text-gray-50 hover:bg-green-600',
     blue: 'bg-blue-500 text-gray-50 hover:bg-blue-600',
+    white: 'bg-white hover:bg-gray-100',
   };
 
   const pickedVariant: string = variants[variant];

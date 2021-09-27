@@ -15,5 +15,6 @@ export interface IProfileProps {
     education: string;
     address: string;
     summary: string;
+    resume: string;
   };
 }

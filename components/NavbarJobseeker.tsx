@@ -40,11 +40,15 @@ const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
+            <Link href="/dashboard">Jobs</Link>
+          </li>
+
+          <li className="li-navbar">
             <Link href="/application">Applications</Link>
           </li>
 
           <li className="li-navbar">
-            <Link href="/savedjob">My Jobs</Link>
+            <Link href="/savedjob">Saved</Link>
           </li>
 
           <li className="li-navbar">

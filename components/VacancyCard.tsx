@@ -116,9 +116,9 @@ const VacancyCard = ({
         {!isEmployer && (
           <div className="hidden sm:block">
             <Button
-              variant="green"
+              variant="white"
               type="button"
-              style="bg-white border-2 text-green-700 border-green-600 hover:text-white font-bold px-3"
+              style="border-2 text-green-700 border-green-600 font-bold px-3"
             >
               <div className="flex justify-center items-center gap-1">
                 <svg

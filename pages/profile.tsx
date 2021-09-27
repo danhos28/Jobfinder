@@ -2,6 +2,7 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-use-before-define
 import React, { useContext } from 'react';
+import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
@@ -11,9 +12,13 @@ import Layout from '../components/Layout';
 import Navbar from '../components/Navbar';
 import { IProfileProps } from '../interfaces/IProfiles';
 import Error from '../components/Error';
-// eslint-disable-next-line arrow-body-style
+
 const profile = ({ data }: IProfileProps) => {
   const { userId, isLoggedIn } = useContext<any>(StateContext);
+  const url = `${process.env.NEXT_PUBLIC_URL}/uploadCv/${userId}`;
+  const downlodResume = () => {
+    axios.get(url).catch(() => null);
+  };
 
   return (
     <Layout title="Jobfinder: profile">
@@ -92,8 +97,32 @@ const profile = ({ data }: IProfileProps) => {
 
             <div className="flex flex-col text-sm mx-8 sm:mx-16 items-center gap-2">
               <p className="font-bold">Resume</p>
-              <p>DanielHosea_resume.pdf</p>
-              <Link href="/uploadCv">
+              {data.resume ? (
+                <button
+                  type="button"
+                  onClick={downlodResume}
+                  className="flex gap-1 items-center hover:underline"
+                >
+                  <p>{data.resume}</p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <p className="text-gray-400">Please upload your resume</p>
+              )}
+              <Link href={`/uploadResume?id=${userId}`}>
                 <div className="px-4 py-2 border-2 border-blue-700 rounded-full text-blue-700 font-bold hover:bg-gray-100 cursor-pointer">
                   Upload or replace resume
                 </div>

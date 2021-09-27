@@ -65,7 +65,7 @@ const profilePicture = () => {
   return (
     <Layout title="Jobfinder: profile picture">
       <Navbar />
-      <div className="flex w-screen h-screen bg-layer-profile justify-center items-center font-poppins">
+      <div className="flex w-screen bg-layer-profile justify-center items-center font-poppins pt-10 pb-16">
         <div className="mt-[60px] flex flex-col items-center bg-white w-[90vw] md:w-1/2 max-w-screen-sm rounded-md shadow-md p-16">
           <p className="font-bold mb-6">Edit profile picture</p>
           <div className="rounded-full mb-6 h-[150px] w-[150px] bg-gray-100 flex items-center justify-center">
@@ -95,7 +95,7 @@ const profilePicture = () => {
           <button
             type="button"
             onClick={removeHandle}
-            className="flex items-center justify-center mb-6 border-2 border-gray-400 text-gray-500 rounded-full px-4 py-1 text-sm bg-white hover:bg-gray-50"
+            className="flex gap-1 items-center justify-center mb-6 text-gray-500 rounded-full px-4 py-1 text-sm bg-white hover:underline"
           >
             Remove
             <svg
@@ -120,6 +120,7 @@ const profilePicture = () => {
             type="file"
             className="mb-6 text-sm bg-gray-50 rounded-[50px] shadow-md w-[110%] sm:w-[70%]"
             onChange={handleImage}
+            accept="image/jpg, image/jpeg, image/png"
           />
           <div className="flex w-full items-center justify-center gap-4 text-sm">
             <Button
