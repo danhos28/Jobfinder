@@ -1,7 +1,8 @@
 /* eslint-disable no-unneeded-ternary */
 // eslint-disable-next-line no-use-before-define
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import useWindowSize from '../hooks/useWindowSize';
 
 const Pagination = ({
   perPage,
@@ -13,17 +14,29 @@ const Pagination = ({
   const router = useRouter();
   const { page }: any = router.query;
   const pages = [];
-  const pageNumberLimit = 5;
+  const { width } = useWindowSize();
 
   const [currPage, setCurrPage] = useState<number>(
     page ? parseInt(page, 10) : 1,
   );
-  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(5);
+
+  const [pageNumberLimit, setPageNumberLimit] = useState(5);
+  const [maxPageNumberLimit, setMaxPageNumberLimit] = useState(pageNumberLimit);
   const [minPageNumberLimit, setMinPageNumberLimit] = useState(0);
 
   for (let i = 1; i <= Math.ceil(pageTotal / perPage); i += 1) {
     pages.push(i);
   }
+
+  useEffect(() => {
+    if (width! <= 480) {
+      setPageNumberLimit(3);
+      setMaxPageNumberLimit(3);
+    } else {
+      setPageNumberLimit(5);
+      setMaxPageNumberLimit(5);
+    }
+  }, [width]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
     const { value } = e.target as HTMLButtonElement;
@@ -87,7 +100,7 @@ const Pagination = ({
           className={
             currPage === number
               ? 'bg-blue-700 text-white px-4 py-2 border-2 cursor-pointer'
-              : 'px-4 py-2 border-2 cursor-pointer'
+              : 'px-4 py-2 border-2 cursor-pointer hover:bg-gray-50'
           }
           onClick={handleClick}
         >
@@ -99,10 +112,10 @@ const Pagination = ({
   });
 
   return (
-    <div className="flex list-none bg-white rounded-full mb-32">
+    <div className="flex list-none bg-white rounded-full mb-32 text-sm">
       <button
         type="button"
-        className="px-4 py-2 border-2 bg-white"
+        className="px-4 py-2 border-2 bg-white hover:bg-gray-50"
         onClick={prevHandler}
         disabled={currPage === pages[0] ? true : false}
       >
@@ -113,7 +126,7 @@ const Pagination = ({
       {pageIncrementBtn}
       <button
         type="button"
-        className="px-4 py-2 border-2 bg-white"
+        className="px-4 py-2 border-2 bg-white hover:bg-gray-50"
         onClick={nextHandler}
         disabled={currPage === pages[pages.length - 1] ? true : false}
       >

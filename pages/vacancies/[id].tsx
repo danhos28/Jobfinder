@@ -1,14 +1,20 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable camelcase */
+import { useContext, useState, useEffect } from 'react';
 import { GetStaticPropsResult, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
+import { AnimatePresence } from 'framer-motion';
+import StateContext from '../../contexts/StateContext';
 import Layout from '../../components/Layout';
 import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
 import { IVacancies } from '../../interfaces/IVacancies';
+import Modal from '../../components/Modal';
 
 interface IProps {
   vacancy: IVacancies;
@@ -17,22 +23,47 @@ interface IProps {
 const VacancyDetail = ({ vacancy }: IProps) => {
   const router = useRouter();
   const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
-  // const { id } = router.query;
+  const { isLoggedIn, userId } = useContext<any>(StateContext);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  const close = () => {
+    setModalOpen(false);
+  };
+  const open = () => setModalOpen(true);
 
   if (router.isFallback) {
     return <p>Loading</p>;
   }
+
+  useEffect((): any => {
+    modalOpen
+      ? (document.documentElement.style.overflow = 'hidden')
+      : (document.documentElement.style.overflow = 'unset');
+    return () => (document.documentElement.style.overflow = 'unset');
+  });
 
   let src = `${url}${vacancy.job_thumb}`;
   if (!vacancy.job_thumb) {
     src = '/images/company-default.png';
   }
 
+  const applyHandler = () => {
+    if (isLoggedIn) {
+      modalOpen ? close() : open();
+    } else {
+      router.push('/login');
+    }
+  };
+
+  const saveHandler = () => {
+    isLoggedIn ? null : router.push('/login');
+  };
+
   return (
     <Layout title={`Jobfinder: ${vacancy.job_title}`}>
       <Navbar />
-      <div className="flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-[full] w-screen bg-gray-100">
-        <div className="flex flex-col items-center justify-start w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden">
+      <div className="flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-full w-screen bg-gray-100">
+        <div className="flex flex-col items-center justify-start h-full w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden">
           <div className="hidden sm:block bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 w-full h-[40px] mb-2" />
           <div className="flex justify-between items-center w-full px-0 sm:px-10 pb-2 py-4 sm:py-0 border-b-[1px]">
             <div className="flex bg-white w-full sm:w-auto items-center">
@@ -63,18 +94,24 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                 </div>
                 <p className="mb-4 hidden sm:block">{vacancy.company}</p>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button type="button" variant="blue">
+                  <Button type="button" variant="blue" onClick={applyHandler}>
                     APPLY
                   </Button>
-                  <Button type="button" variant="green">
+                  <Button type="button" variant="green" onClick={saveHandler}>
                     <div className="flex items-center justify-center gap-2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
                       >
-                        <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                        />
                       </svg>
                       SAVE
                     </div>
@@ -195,6 +232,16 @@ const VacancyDetail = ({ vacancy }: IProps) => {
           </div>
         </div>
       </div>
+
+      <AnimatePresence
+        initial={false}
+        exitBeforeEnter
+        onExitComplete={() => null}
+      >
+        {modalOpen && (
+          <Modal handleClose={close} vacancy={vacancy} userId={userId} />
+        )}
+      </AnimatePresence>
     </Layout>
   );
 };

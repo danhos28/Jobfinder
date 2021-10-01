@@ -1,3 +1,5 @@
+/* eslint-disable react/style-prop-object */
+/* eslint-disable camelcase */
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -8,14 +10,18 @@ import Error from '../components/Error';
 import { IVacancies } from '../interfaces/IVacancies';
 import Footer from '../components/Footer';
 import Layout from '../components/Layout';
+import ApplicationCard from '../components/ApplicationCard';
+import { IApplication } from '../interfaces/IApplication';
 
 const empDashboard = () => {
   const { isLoggedIn, userId } = useContext<any>(StateContext);
   const [data, setData] = useState([]);
+  const [appData, setAppData] = useState([]);
   const [vacancyDelete, setVacancyDelete] = useState(false);
+  const [appResponse, setAppResponse] = useState(false);
   const router = useRouter();
   const role = userId.split('-')[0];
-  const url = `${process.env.NEXT_PUBLIC_URL}/vacancy/employer`;
+  const url = `${process.env.NEXT_PUBLIC_URL}`;
 
   const addJobHandler = () => {
     router.push('/vacancies/addVacancy');
@@ -23,14 +29,21 @@ const empDashboard = () => {
 
   useEffect(() => {
     axios
-      .post(url, {
-        employer_id: userId,
-      })
+      .get(`${url}/vacancy/employer/${userId}`)
       .then((res) => {
         setData(res.data);
       })
       .catch((err) => console.log(err));
   }, [userId, vacancyDelete]);
+
+  useEffect(() => {
+    axios
+      .get(`${url}/application/employer/${userId}`)
+      .then((res) => {
+        setAppData(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [userId, appResponse]);
 
   const renderDashboard = () => {
     if (isLoggedIn && role === 'employer') {
@@ -45,7 +58,7 @@ const empDashboard = () => {
           </button>
 
           <div className="flex flex-col md:flex-row w-full gap-6">
-            <div className="flex flex-col w-full md:w-[60%]">
+            <div className="flex flex-col w-full lg:w-1/2">
               <p className="flex justify-center items-center font-bold bg-white border-[1px] px-2 py-1 max-w-[120px]">
                 My vacancy
               </p>
@@ -53,7 +66,7 @@ const empDashboard = () => {
                 {data.map((vacancy: IVacancies) => (
                   <div key={vacancy.vacancy_id}>
                     <VacancyCard
-                      vacancyDelete={false}
+                      vacancyDelete={vacancyDelete}
                       setVacancyDelete={setVacancyDelete}
                       vacancies={vacancy}
                       key={vacancy.vacancy_id}
@@ -64,12 +77,23 @@ const empDashboard = () => {
               </div>
             </div>
 
-            <div className="flex flex-col w-full md:w-[40%] ">
+            <div className="flex flex-col w-full lg:w-1/2">
               <p className="flex justify-center items-center font-bold bg-white border-[1px] px-2 py-1 max-w-[120px]">
                 Applicant
               </p>
-              <div className="flex justify-center items-center min-h-[450px] bg-gray-100 border-[1px] w-full text-xl font-bold text-gray-400">
-                <p>No applicant yet</p>
+              <div className="flex flex-col font-poppins items-center min-h-[450px] bg-gray-100 border-[1px] w-full text-xl font-bold text-gray-400">
+                {appData ? (
+                  appData.map((app: IApplication) => (
+                    <ApplicationCard
+                      key={app.application_id}
+                      data={app}
+                      appResponse={appResponse}
+                      setAppResponse={setAppResponse}
+                    />
+                  ))
+                ) : (
+                  <p>No applicant yet</p>
+                )}
               </div>
             </div>
           </div>

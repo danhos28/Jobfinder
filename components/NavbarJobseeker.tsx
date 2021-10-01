@@ -44,7 +44,7 @@ const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
-            <Link href="/application">Applications</Link>
+            <Link href={`/applications/?id=${userId}`}>Applications</Link>
           </li>
 
           <li className="li-navbar">

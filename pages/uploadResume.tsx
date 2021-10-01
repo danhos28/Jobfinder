@@ -41,12 +41,25 @@ const uploadResume = () => {
     setResume((e.target as HTMLFormElement).files[0]);
   };
 
+  const removeResume = () => {
+    axios
+      .delete(url)
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Resume removed!',
+          text: "You've removed your resume",
+        });
+      })
+      .catch(null);
+  };
+
   return (
     <div>
       <Layout title="Jobfinder: upload resume">
         <Navbar />
         <div className="flex flex-col h-screen w-screen bg-layer-profile justify-center items-center p-16 font-poppins">
-          <div className="flex flex-col items-center p-12 w-[40vw] bg-white mt-[60px] rounded-md shadow-md">
+          <div className="flex flex-col items-center p-12 w-[90vw] md:w-[70vw] xl:w-[50vw] bg-white mt-[60px] rounded-md shadow-md max-w-[600px]">
             <p className="font-bold mb-2">Upload or Replace Resume</p>
             <p className="text-sm mb-6">File type should be a pdf (max: 2mb)</p>
             <input
@@ -55,6 +68,13 @@ const uploadResume = () => {
               accept="application/pdf"
               onChange={handleResume}
             />
+            <button
+              type="button"
+              className="text-sm text-gray-500 hover:underline mb-4"
+              onClick={removeResume}
+            >
+              Remove resume
+            </button>
             <div className="flex w-full items-center justify-center gap-4 text-sm">
               <Button
                 type="submit"

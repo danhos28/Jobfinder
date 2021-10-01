@@ -39,7 +39,7 @@ const jobseeker = () => {
     });
     Toast.fire({
       icon: 'success',
-      title: 'Signed in successfully',
+      title: 'Signed up successfully',
     });
   };
 
@@ -48,7 +48,7 @@ const jobseeker = () => {
       const response = await axios.post(url, formData);
       console.log(response);
       signInAlert();
-      router.push('/dashboard');
+      router.push('/login');
     } catch (error: any) {
       console.log(error.response.data.message);
       Swal.fire({
