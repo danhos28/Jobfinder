@@ -35,6 +35,7 @@ const Modal = ({
   handleClose,
   vacancy,
   userId,
+  elHeight,
 }: {
   handleClose: MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
   vacancy: IVacancies;
@@ -88,10 +89,10 @@ const Modal = ({
   };
 
   return (
-    <Backdrop onClick={handleClose}>
+    <Backdrop onClick={handleClose} elHeight={elHeight}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="rounded-md flex flex-col items-center px-6 py-8 sm:p-10 bg-white w-[95vw] sm:w-[60vw] max-w-screen-md h-auto font-poppins"
+        className="rounded-md flex flex-col items-center mx-auto px-6 py-8 sm:p-10 bg-white w-[95vw] sm:w-[60vw] max-w-screen-md h-auto font-poppins"
         variants={dropIn}
         initial="hidden"
         animate="visible"

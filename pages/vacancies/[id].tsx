@@ -3,7 +3,7 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable camelcase */
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { GetStaticPropsResult, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -25,6 +25,8 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   const { isLoggedIn, userId } = useContext<any>(StateContext);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [elHeight, setElHeight] = useState<number | null>();
+  const ref = useRef<any>(null);
 
   const close = () => {
     setModalOpen(false);
@@ -36,11 +38,8 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   }
 
   useEffect((): any => {
-    modalOpen
-      ? (document.documentElement.style.overflow = 'hidden')
-      : (document.documentElement.style.overflow = 'unset');
-    return () => (document.documentElement.style.overflow = 'unset');
-  });
+    setElHeight(ref.current.clientHeight - 25);
+  }, [elHeight]);
 
   let src = `${url}${vacancy.job_thumb}`;
   if (!vacancy.job_thumb) {
@@ -62,7 +61,10 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   return (
     <Layout title={`Jobfinder: ${vacancy.job_title}`}>
       <Navbar />
-      <div className="flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-full w-screen bg-gray-100">
+      <div
+        className="relative flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-full w-screen bg-gray-100"
+        ref={ref}
+      >
         <div className="flex flex-col items-center justify-start h-full w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden">
           <div className="hidden sm:block bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 w-full h-[40px] mb-2" />
           <div className="flex justify-between items-center w-full px-0 sm:px-10 pb-2 py-4 sm:py-0 border-b-[1px]">
@@ -231,17 +233,21 @@ const VacancyDetail = ({ vacancy }: IProps) => {
             </div>
           </div>
         </div>
+        <AnimatePresence
+          initial={false}
+          exitBeforeEnter
+          onExitComplete={() => null}
+        >
+          {modalOpen && (
+            <Modal
+              handleClose={close}
+              vacancy={vacancy}
+              userId={userId}
+              elHeight={elHeight}
+            />
+          )}
+        </AnimatePresence>
       </div>
-
-      <AnimatePresence
-        initial={false}
-        exitBeforeEnter
-        onExitComplete={() => null}
-      >
-        {modalOpen && (
-          <Modal handleClose={close} vacancy={vacancy} userId={userId} />
-        )}
-      </AnimatePresence>
     </Layout>
   );
 };

@@ -9,9 +9,9 @@ const Hero = () => (
         <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4">
           Find your dream career here
         </h1>
-        <h3 className="text-base sm:text-lg md:text-xl mb-8">
+        <h2 className="text-base sm:text-lg md:text-xl mb-8">
           Get matched with a job that suits you here at Jobfinder.
-        </h3>
+        </h2>
         <div className="flex sm:flex-row flex-col">
           <input
             type="text"
@@ -20,7 +20,7 @@ const Hero = () => (
           />
           <button
             type="button"
-            className="bg-blue-500 text-gray-50 px-4 rounded-md font-bold py-2 sm:py-2 mt-4 sm:mt-0 hover:bg-blue-600 transition-all ease-in-out duration-100"
+            className="bg-blue-900 text-white px-4 rounded-md font-bold py-2 sm:py-2 mt-4 sm:mt-0 hover:bg-blue-800 transition-all ease-in-out duration-100"
           >
             Search
           </button>

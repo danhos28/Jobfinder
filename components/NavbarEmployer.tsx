@@ -41,6 +41,10 @@ const NavbarEmployer = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
+            <Link href="/schedule">Schedule</Link>
+          </li>
+
+          <li className="li-navbar">
             <Link href="/profile">
               <p className="hover:underline cursor-pointer capitalize">
                 {username}

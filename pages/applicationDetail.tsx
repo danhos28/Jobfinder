@@ -1,20 +1,23 @@
-/* eslint-disable no-return-assign */
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/style-prop-object */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+// eslint-disable-next-line object-curly-newline
+import { useState, useEffect, useRef, useContext } from 'react';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import { AnimatePresence } from 'framer-motion';
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
 import Layout from '../components/Layout';
 import ModalAccept from '../components/ModalAccept';
 import Navbar from '../components/Navbar';
+import StateContext from '../contexts/StateContext';
 // /import { IProfileProps } from '../interfaces/IProfiles';
 // import { IVacancies } from '../interfaces/IVacancies';
 
@@ -25,7 +28,12 @@ import Navbar from '../components/Navbar';
 
 const acceptApplicant = ({ data }: any) => {
   const url = `${process.env.NEXT_PUBLIC_URL}`;
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const router = useRouter();
+  const { id, modal } = router.query;
+  const { userId } = useContext<any>(StateContext);
+  const [modalOpen, setModalOpen] = useState<boolean>(modal ? true : false);
+  const [elHeight, setElHeight] = useState<number | null>();
+  const ref = useRef<any>(null);
 
   const close = () => {
     setModalOpen(false);
@@ -34,6 +42,35 @@ const acceptApplicant = ({ data }: any) => {
 
   const acceptHandler = () => {
     modalOpen ? close() : open();
+  };
+
+  const rejectHandler = (application_id: string | string[] | undefined) => {
+    const app_response = {
+      application_id,
+      response: 'REJECT',
+    };
+
+    axios
+      .put(`${url}/application`, app_response)
+      .then(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+        Toast.fire({
+          icon: 'success',
+          title: 'Candidate Rejected!',
+        });
+        router.push('/empDashboard');
+      })
+      .catch(() => null);
   };
 
   const downlodResume = () => {
@@ -47,16 +84,20 @@ const acceptApplicant = ({ data }: any) => {
   };
 
   useEffect((): any => {
-    modalOpen
-      ? (document.documentElement.style.overflow = 'hidden')
-      : (document.documentElement.style.overflow = 'unset');
-    return () => (document.documentElement.style.overflow = 'unset');
-  });
+    // modalOpen
+    //   ? (document.documentElement.style.overflow = 'hidden')
+    //   : (document.documentElement.style.overflow = 'unset');
+    setElHeight(ref.current.clientHeight);
+    // return () => (document.documentElement.style.overflow = 'unset');
+  }, [elHeight]);
 
   return (
     <Layout title="Jobfinder: accept">
       <Navbar />
-      <div className="flex flex-col bg-gray-50 w-screen items-center pb-16 font-poppins">
+      <div
+        className="flex flex-col bg-gray-50 w-screen items-center pb-16 font-poppins"
+        ref={ref}
+      >
         <div className="flex flex-col mt-[80px] bg-white w-[95vw] sm:w-3/4 max-w-screen-lg shadow-md rounded-md">
           <div className="flex flex-col sm:flex-row py-4 px-4 sm:px-8 border-b-[1px] gap-4 text-sm items-center">
             <div className="flex items-center gap-2 sm:gap-4 w-full">
@@ -118,7 +159,7 @@ const acceptApplicant = ({ data }: any) => {
           <div className="flex-col text-sm pb-16">
             <div className="flex p-4 sm:p-8 flex-col border-b-[1px]">
               <h1 className="pb-2 text-base">
-                Applied to:{' '}
+                Applied for:{' '}
                 <span className=" font-bold text-blue-700">
                   {data.job_title}
                 </span>
@@ -200,7 +241,11 @@ const acceptApplicant = ({ data }: any) => {
                 <Button type="button" variant="green" onClick={acceptHandler}>
                   Accept
                 </Button>
-                <Button type="button" variant="red" onClick={acceptHandler}>
+                <Button
+                  type="button"
+                  variant="red"
+                  onClick={() => rejectHandler(id)}
+                >
                   Reject
                 </Button>
               </div>
@@ -212,7 +257,16 @@ const acceptApplicant = ({ data }: any) => {
           exitBeforeEnter
           onExitComplete={() => null}
         >
-          {modalOpen && <ModalAccept handleClose={close} />}
+          {modalOpen && (
+            <ModalAccept
+              handleClose={close}
+              name={data.first_name}
+              jobseekerId={data.jobseeker_id}
+              employerId={userId}
+              applicationId={id}
+              elHeight={elHeight}
+            />
+          )}
         </AnimatePresence>
       </div>
       <Footer />
