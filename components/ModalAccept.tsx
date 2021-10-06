@@ -37,6 +37,8 @@ interface IModal {
   jobseekerId: string;
   employerId: string;
   applicationId: string | string[] | undefined;
+  jobTitle: string;
+  company: string;
 }
 
 interface IFormData {
@@ -54,6 +56,8 @@ const ModalAccept = ({
   jobseekerId,
   employerId,
   applicationId,
+  jobTitle,
+  company,
 }: IModal) => {
   const { register, handleSubmit } = useForm();
   const [selectedDate, setSelectDate] = useState<any>(new Date());
@@ -70,6 +74,8 @@ const ModalAccept = ({
       datetime: selectedDate,
       link: formData.location_link,
       notes: formData.notes,
+      job_title: jobTitle,
+      company,
     };
     axios
       .post(url, data)
@@ -130,7 +136,6 @@ const ModalAccept = ({
           <select
             id="interviewer"
             required
-            //  {...register('job_level')}
             className="w-[90px]"
             {...register('interviewer')}
           >
@@ -174,7 +179,8 @@ const ModalAccept = ({
           <textarea
             id="notes"
             className="textarea w-full"
-            placeholder="notes"
+            placeholder="max 200 words"
+            maxLength={200}
             required
             {...register('notes')}
           />

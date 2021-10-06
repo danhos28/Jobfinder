@@ -3,6 +3,7 @@
 /* eslint-disable camelcase */
 import { GetServerSideProps } from 'next';
 import ReactMarkdown from 'react-markdown';
+import { useRouter } from 'next/router';
 import useWindowSize from '../hooks/useWindowSize';
 import Footer from '../components/Footer';
 import Layout from '../components/Layout';
@@ -10,6 +11,7 @@ import Navbar from '../components/Navbar';
 import { IVacancies } from '../interfaces/IVacancies';
 
 interface IAppVac extends IVacancies {
+  application_id: string;
   response: string;
   applied_at: string;
 }
@@ -23,7 +25,11 @@ interface IApplication {
 const applications = ({ application }: IApplication) => {
   const { data } = application;
   const { width } = useWindowSize();
-  console.log(width);
+  const router = useRouter();
+
+  const detailHandler = (id: string) => {
+    router.push(`/applicationResponse?id=${id}`);
+  };
 
   return (
     <Layout title="Jobfinder: applications">
@@ -55,10 +61,19 @@ const applications = ({ application }: IApplication) => {
                   <div className="flex flex-col p-2 sm:justify-center items-center w-[30%] text-sm sm:text-base">
                     <p className="font-bold">Status</p>
                     <p className="text-gray-400">{app.response}</p>
+                    {app.response === 'ACCEPT' ? (
+                      <button
+                        type="button"
+                        className="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-600"
+                        onClick={() => detailHandler(app.application_id)}
+                      >
+                        Detail
+                      </button>
+                    ) : null}
                   </div>
                 </div>
-                <div className="flex justify-between p-2 gap-2 sm:p-4">
-                  <div className="flex flex-col">
+                <div className="flex flex-col sm:flex-row justify-between p-2 gap-2 sm:p-4">
+                  <div className="flex flex-col w-full sm:w-1/2">
                     <p>{app.company}</p>
                     <p className="text-sm">{app.job_location}</p>
                     <p className="text-blue-700 text-sm">
@@ -86,7 +101,7 @@ const applications = ({ application }: IApplication) => {
                         ? app.job_qualifications.substring(0, 250) + '......'
                         : app.job_qualifications.substring(0, 200) + '......'
                     }
-                    className="text-sm"
+                    className="text-sm w-full sm:w-1/2"
                   />
                 </div>
               </div>

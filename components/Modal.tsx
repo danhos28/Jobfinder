@@ -40,6 +40,7 @@ const Modal = ({
   handleClose: MouseEventHandler<HTMLDivElement | HTMLButtonElement>;
   vacancy: IVacancies;
   userId: string;
+  elHeight: number | null | undefined;
 }) => {
   const [profile, setProfile] = useState<IProfileProps>();
   const url = `${process.env.NEXT_PUBLIC_URL}/jobseeker/${userId}`;

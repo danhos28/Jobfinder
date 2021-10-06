@@ -3,11 +3,14 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable camelcase */
+// eslint-disable-next-line object-curly-newline
 import { useContext, useState, useEffect, useRef } from 'react';
 import { GetStaticPropsResult, GetStaticPaths, GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 import { AnimatePresence } from 'framer-motion';
 import StateContext from '../../contexts/StateContext';
 import Layout from '../../components/Layout';
@@ -24,8 +27,9 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   const router = useRouter();
   const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   const { isLoggedIn, userId } = useContext<any>(StateContext);
+  const { id } = router.query;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [elHeight, setElHeight] = useState<number | null>();
+  const [elHeight, setElHeight] = useState<number | null | undefined>();
   const ref = useRef<any>(null);
 
   const close = () => {
@@ -55,7 +59,34 @@ const VacancyDetail = ({ vacancy }: IProps) => {
   };
 
   const saveHandler = () => {
-    isLoggedIn ? null : router.push('/login');
+    if (isLoggedIn) {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_URL}/savejob`, {
+          jobseeker_id: userId,
+          vacancy_id: id,
+        })
+        .then(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Job saved!',
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      router.push('/login');
+    }
   };
 
   return (

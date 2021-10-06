@@ -48,7 +48,7 @@ const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
-            <Link href="/savedjob">Saved</Link>
+            <Link href={`/savejob?id=${userId}&saved=true`}>Saved</Link>
           </li>
 
           <li className="li-navbar">

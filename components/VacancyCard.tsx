@@ -1,8 +1,12 @@
 /* eslint-disable react/style-prop-object */
+import { useContext } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
+import Swal from 'sweetalert2';
 import Button from './Button';
+import StateContext from '../contexts/StateContext';
 import { IVacancies } from '../interfaces/IVacancies';
 
 interface IProps {
@@ -21,6 +25,9 @@ const VacancyCard = ({
 }: IProps) => {
   let day: string = 'Today';
 
+  const router = useRouter();
+  const { saved } = router.query;
+  const { userId } = useContext<any>(StateContext);
   const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   const d1: number = new Date().getTime();
   const d2: number = Date.parse(vacancies.job_createAt);
@@ -43,7 +50,45 @@ const VacancyCard = ({
     axios
       .delete(`${process.env.NEXT_PUBLIC_URL}/vacancy/${vacancies.vacancy_id}`)
       .then(() => {
-        console.log('delete success');
+        setVacancyDelete(!vacancyDelete);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const saveHandler = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_URL}/savejob`, {
+        jobseeker_id: userId,
+        vacancy_id: vacancies.vacancy_id,
+      })
+      .then(() => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Job saved!',
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteSaveJob = () => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_URL}/savejob/delete`, {
+        jobseeker_id: userId,
+        vacancy_id: vacancies.vacancy_id,
+      })
+      .then(() => {
         setVacancyDelete(!vacancyDelete);
       })
       .catch((err) => console.log(err));
@@ -51,7 +96,13 @@ const VacancyCard = ({
 
   return (
     <div className="flex flex-col font-poppins text-xs sm:text-sm">
-      <div className="flex justify-between items-center w-full h-full box-border bg-white pr-2 sm:pr-8 gap-2">
+      <div
+        className="flex justify-between items-center w-full h-full box-border bg-white hover:bg-gray-50 pr-2 sm:pr-8 gap-2"
+        onClick={() => router.push(`/vacancies/${vacancies.vacancy_id}`)}
+        role="button"
+        tabIndex={0}
+        onKeyPress={() => router.push(`/vacancies/${vacancies.vacancy_id}`)}
+      >
         <div className="flex items-center">
           <div className="block sm:hidden">
             <Image
@@ -113,12 +164,38 @@ const VacancyCard = ({
             </button>
           </div>
         )}
-        {!isEmployer && (
+        {saved ? (
+          <div className="block">
+            <button
+              className="text-gray-300"
+              type="button"
+              onClick={deleteSaveJob}
+            >
+              <div className="flex justify-center items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 sm:h-6 sm:w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        ) : (
           <div className="hidden sm:block">
             <Button
               variant="white"
               type="button"
               style="border-2 text-green-700 border-green-600 font-bold px-3"
+              onClick={saveHandler}
             >
               <div className="flex justify-center items-center gap-1">
                 <svg

@@ -265,6 +265,8 @@ const acceptApplicant = ({ data }: any) => {
               employerId={userId}
               applicationId={id}
               elHeight={elHeight}
+              jobTitle={data.job_title}
+              company={data.company}
             />
           )}
         </AnimatePresence>

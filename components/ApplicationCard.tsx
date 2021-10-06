@@ -34,8 +34,17 @@ const ApplicationCard = ({
     router.push(`/applicationDetail?id=${data.application_id}&modal=true`);
   };
 
+  const deleteHandler = () => {
+    axios
+      .delete(`${url}/application/${data.application_id}`)
+      .then(() => {
+        setAppResponse(!appResponse);
+      })
+      .catch(null);
+  };
+
   const renderResponse = (application_id: string) => (
-    <div className="flex flex-col xl:flex-row gap-2 text-xs items-center">
+    <div className="flex flex-row gap-2 text-xs items-center">
       <button
         type="button"
         className=" p-2 bg-blue-500 rounded-md text-white hover:bg-blue-600 w-[60px]"
@@ -72,7 +81,7 @@ const ApplicationCard = ({
       return (
         <div className="flex gap-1 items-center">
           <p className="text-red-600">Rejected</p>
-          <button type="button">
+          <button type="button" onClick={deleteHandler}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -95,7 +104,7 @@ const ApplicationCard = ({
       return (
         <div className="flex gap-1 items-center">
           <p className="text-green-600">Accepted</p>
-          <button type="button">
+          <button type="button" onClick={deleteHandler}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -119,34 +128,36 @@ const ApplicationCard = ({
 
   return (
     <div
-      className="flex items-center gap-4 w-full border-b-[1px] pl-2 pr-4 lg:py-4 xl:py-2 bg-white"
+      className="flex flex-col xl:flex-row xl:items-center gap-4 w-full border-b-[1px] py-2 pl-2 pr-4 lg:py-4 xl:py-2 bg-white"
       key={data.application_id}
     >
-      <img
-        src={
-          data.profile_picture
-            ? `${url}/images/${data.profile_picture}`
-            : 'images/user.png'
-        }
-        alt="profile-pic"
-        className="w-[100px] h-[100px] object-cover rounded-full"
-      />
-      <div className="flex flex-col text-sm font-normal text-black flex-1">
-        <p className="block font-bold lg:hidden text-blue-700 mb-2">
-          {data.job_title}
-        </p>
-        <p className="capitalize font-semibold">
-          {`${data.first_name} ${data.last_name}`}
-        </p>
-        <p className="text-xs">{data.email}</p>
-        <p className="text-xs">{data.phone_number}</p>
-        <p className="text-xs">
-          {'Applied at '}
-          {data.applied_at.slice(0, 10).split('-').reverse().join('/')}
-        </p>
+      <div className="flex gap-2 w-full">
+        <img
+          src={
+            data.profile_picture
+              ? `${url}/images/${data.profile_picture}`
+              : 'images/user.png'
+          }
+          alt="profile-pic"
+          className="w-[100px] h-[100px] object-cover rounded-full"
+        />
+        <div className="flex flex-col text-sm font-normal text-black flex-1">
+          <p className="block font-bold lg:hidden text-blue-700 mb-2">
+            {data.job_title}
+          </p>
+          <p className="capitalize font-semibold">
+            {`${data.first_name} ${data.last_name}`}
+          </p>
+          <p className="text-xs">{data.email}</p>
+          <p className="text-xs">{data.phone_number}</p>
+          <p className="text-xs">
+            {'Applied at '}
+            {data.applied_at.slice(0, 10).split('-').reverse().join('/')}
+          </p>
+        </div>
       </div>
 
-      <div className="hidden flex-col items-center w-[30%] lg:flex text-sm">
+      <div className="flex flex-col xl:items-center w-[30%] lg:flex text-sm px-2">
         <p className="text-black font-base text-sm mb-2">{data.job_title}</p>
         {renderResult(data.application_id)}
       </div>

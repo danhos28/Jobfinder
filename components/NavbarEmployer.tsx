@@ -1,11 +1,13 @@
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import StateContext from '../contexts/StateContext';
 
 interface IProps {
   username: string;
   logoutHandler: () => void;
 }
 const NavbarEmployer = ({ username, logoutHandler }: IProps) => {
+  const { userId } = useContext<any>(StateContext);
   const [hamburgerClick, setHamburgerClick] = useState(false);
   return (
     <div className="flex items-center">
@@ -41,7 +43,7 @@ const NavbarEmployer = ({ username, logoutHandler }: IProps) => {
           </li>
 
           <li className="li-navbar">
-            <Link href="/schedule">Schedule</Link>
+            <Link href={`/schedule?id=${userId}`}>Schedule</Link>
           </li>
 
           <li className="li-navbar">
