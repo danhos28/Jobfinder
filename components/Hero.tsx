@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Navbar from './Navbar';
+import SearchBar from './SearchBar';
 
 const Hero = () => (
   <div className="flex flex-col h-full w-auto bg-hero-pattern bg-cover bg-bottom font-poppins">
@@ -13,17 +14,7 @@ const Hero = () => (
           Get matched with a job that suits you here at Jobfinder.
         </h2>
         <div className="flex sm:flex-row flex-col">
-          <input
-            type="text"
-            placeholder="Search your job here..."
-            className="h-12 w-full p-4 rounded-md mr-4"
-          />
-          <button
-            type="button"
-            className="bg-blue-900 text-white px-4 rounded-md font-bold py-2 sm:py-2 mt-4 sm:mt-0 hover:bg-blue-800 transition-all ease-in-out duration-100"
-          >
-            Search
-          </button>
+          <SearchBar />
         </div>
         <div className="flex justify-center items-center">
           <Link href="/dashboard">

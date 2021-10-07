@@ -22,7 +22,7 @@ const editProfile = ({ data }: IProfileProps) => {
     axios
       .put(url, formData)
       .then(() => router.push(`/profile?id=${id}`))
-      .catch((err) => console.log(err));
+      .catch(null);
   };
   return (
     <Layout title="Jobfinder: Edit profile">

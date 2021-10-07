@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
-import { useContext } from 'react';
+// eslint-disable-next-line no-use-before-define
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -28,6 +29,7 @@ const VacancyCard = ({
   const router = useRouter();
   const { saved } = router.query;
   const { userId } = useContext<any>(StateContext);
+  const role = userId.split('-')[0];
   const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
   const d1: number = new Date().getTime();
   const d2: number = Date.parse(vacancies.job_createAt);
@@ -46,16 +48,8 @@ const VacancyCard = ({
     src = '/images/company-default.png';
   }
 
-  const deleteHandler = () => {
-    axios
-      .delete(`${process.env.NEXT_PUBLIC_URL}/vacancy/${vacancies.vacancy_id}`)
-      .then(() => {
-        setVacancyDelete(!vacancyDelete);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const saveHandler = () => {
+  const saveHandler = (event: React.MouseEvent) => {
+    event.stopPropagation();
     axios
       .post(`${process.env.NEXT_PUBLIC_URL}/savejob`, {
         jobseeker_id: userId,
@@ -82,16 +76,32 @@ const VacancyCard = ({
       .catch((err) => console.log(err));
   };
 
-  const deleteSaveJob = () => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_URL}/savejob/delete`, {
-        jobseeker_id: userId,
-        vacancy_id: vacancies.vacancy_id,
-      })
-      .then(() => {
-        setVacancyDelete(!vacancyDelete);
-      })
-      .catch((err) => console.log(err));
+  const editHandler = (event: React.MouseEvent, vacancyId: string) => {
+    event.stopPropagation();
+    router.push(`/vacancies/addVacancy/?status=edit&id=${vacancyId}`);
+  };
+
+  const deleteHandler = (event: React.MouseEvent, vacancyId: string) => {
+    event.stopPropagation();
+
+    if (role === 'employer') {
+      axios
+        .delete(`${process.env.NEXT_PUBLIC_URL}/vacancy/${vacancyId}`)
+        .then(() => {
+          setVacancyDelete(!vacancyDelete);
+        })
+        .catch((err) => console.log(err));
+    } else {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_URL}/savejob/delete`, {
+          jobseeker_id: userId,
+          vacancy_id: vacancies.vacancy_id,
+        })
+        .then(() => {
+          setVacancyDelete(!vacancyDelete);
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -146,32 +156,37 @@ const VacancyCard = ({
           </div>
         </div>
 
-        {isEmployer && (
-          <div className="flex flex-col items-end text-lg font-semibold">
-            <div className="hover:underline cursor-pointer text-green-600 text-xs sm:text-sm">
-              <Link
-                href={`/vacancies/addVacancy/?status=edit&id=${vacancies.vacancy_id}`}
+        {saved || isEmployer ? (
+          <div className="flex items-center gap-4">
+            {isEmployer && (
+              <button
+                type="button"
+                onClick={(event) => editHandler(event, vacancies.vacancy_id)}
+                className="font-bold hover:underline text-green-600 text-xs sm:text-sm"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                  />
+                </svg>
                 Edit
-              </Link>
-            </div>
+              </button>
+            )}
             <button
+              className="text-red-600 text-xs sm:text-sm font-bold hover:underline"
               type="button"
-              className="hover:underline font-semibold text-red-600 text-xs sm:text-sm"
-              onClick={deleteHandler}
+              onClick={(event) => deleteHandler(event, vacancies.vacancy_id)}
             >
-              Delete
-            </button>
-          </div>
-        )}
-        {saved ? (
-          <div className="block">
-            <button
-              className="text-gray-300"
-              type="button"
-              onClick={deleteSaveJob}
-            >
-              <div className="flex justify-center items-center gap-1">
+              <div className="flex flex-col items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-5 w-5 sm:h-6 sm:w-6"
@@ -186,6 +201,7 @@ const VacancyCard = ({
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
+                Delete
               </div>
             </button>
           </div>

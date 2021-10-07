@@ -21,6 +21,7 @@
     "react/react-in-jsx-scope": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "react/jsx-props-no-spreading": "off",
+    "no-console": "off",
     "linebreak-style": 0,
     "import/extensions": 0
   }
