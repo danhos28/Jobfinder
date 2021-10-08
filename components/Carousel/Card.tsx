@@ -11,7 +11,7 @@ const Card = (props: IProps) => {
   return (
     <div className="relative">
       <img
-        className="rounded-lg w-[450px] h-[300px]"
+        className="rounded-lg w-[450px] h-[200px] sm:h-[300px]"
         src={src}
         alt="carousel"
       />

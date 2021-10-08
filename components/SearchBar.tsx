@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 import axios from 'axios';
 // eslint-disable-next-line no-use-before-define
 import React, { ChangeEvent, useState, useEffect } from 'react';
@@ -31,11 +32,11 @@ const SearchBar = () => {
   }, [searchVacancy]);
 
   return (
-    <form className="flex justify-between items-center  px-7 gap-4  h-full w-full text-sm">
+    <form className="flex justify-between items-center gap-4 h-full w-full text-sm">
       <div className="flex w-full relative">
         <input
           placeholder="Search job or company ..."
-          className="h-12 flex-grow px-4"
+          className="h-10 sm:h-12 flex-grow px-4"
           onChange={handleFilter}
           onFocus={() => setIsExpanded(true)}
           onBlur={() => setIsExpanded(false)}
@@ -64,7 +65,12 @@ const SearchBar = () => {
           </div>
         )}
       </div>
-      <Button type="submit" variant="blue" onClick={handleSearch}>
+      <Button
+        type="submit"
+        variant="blue"
+        onClick={handleSearch}
+        style="h-10 sm:h-12"
+      >
         <div className="flex items-center gap-2">
           <div className="hidden sm:block">SEARCH</div>
           <svg

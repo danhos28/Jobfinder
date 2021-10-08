@@ -18,7 +18,7 @@ const Quotes = (props: IProps) => {
         alt="quotes"
         className="rounded-full h-20 w-20 lg:h-40 lg:w-40 my-4"
       />
-      <div className="flex flex-col lg:pl-8 lg:text-left">
+      <div className="flex flex-col lg:pl-8 lg:text-left text-sm sm:text-base">
         <p>{quotes}</p>
         <div className="mt-8 lg:mt-4 lg:text-left">
           <p className="text-blue-900 font-bold">{name}</p>

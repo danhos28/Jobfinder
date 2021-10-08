@@ -25,7 +25,7 @@ const dashboard: React.FC<IProps> = ({ vacancies }) => {
     <Layout title="Jobfinder: Dashboard">
       <div className="flex flex-col items-center bg-gray-50">
         <Navbar />
-        <div className="pt-[60px] h-40 w-full sm:w-[90vw] md:w-3/4 bg-gray-100">
+        <div className="pt-[60px] px-4 sm:px-7 h-32 sm:h-40 w-full sm:w-[90vw] md:w-3/4 bg-gray-100">
           <SearchBar />
         </div>
         <div className="flex justify-between items-center mt-[40px] mb-2 w-full sm:w-3/4 px-4 font-poppins text-sm">

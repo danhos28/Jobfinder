@@ -43,12 +43,8 @@ const register = () => (
               <h2 className="font-bold mb-4 2xl:text-xl">
                 I'm looking for work
               </h2>
-              <p className="mb-4">
-                Create a
-                <span className="italic font-bold text-sm sm:text-md">
-                  {' '}
-                  jobseeker{' '}
-                </span>
+              <p className="mb-4 text-sm sm:text-md">
+                Create a<span className="italic font-bold "> jobseeker </span>
                 account.
               </p>
               <Button variant="blue">
@@ -86,12 +82,8 @@ const register = () => (
               <h2 className="font-bold mb-4 2xl:text-xl">
                 I'm looking to hire
               </h2>
-              <p className="mb-4">
-                Create a
-                <span className="italic font-bold text-sm sm:text-md">
-                  {' '}
-                  recruiter{' '}
-                </span>
+              <p className="mb-4 text-sm sm:text-md">
+                Create a<span className="italic font-bold"> recruiter </span>
                 account.
               </p>
               <Button variant="green">
