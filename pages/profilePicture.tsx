@@ -23,16 +23,16 @@ const profilePicture = () => {
     axios
       .post(url, postFormData)
       .then(() => router.push(`/editProfile?id=${id}`))
-      .catch(
-        () =>
-          // eslint-disable-next-line implicit-arrow-linebreak
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Please upload a picture.',
-          }),
+      .catch((err) => {
+        // eslint-disable-next-line implicit-arrow-linebreak
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please upload a picture.',
+        });
         // eslint-disable-next-line function-paren-newline
-      );
+        console.log(err);
+      });
   };
 
   const onCancel = () => {
