@@ -106,7 +106,7 @@ const editProfile = ({ data }: IProfileProps) => {
                 <div className="flex items-center justify-center rounded-full bg-gray-50 h-[150px] w-[150px] lg:h-[180px] lg:w-[180px]">
                   {data.profile_picture ? (
                     <img
-                      src={`${process.env.NEXT_PUBLIC_URL}/images/${data.profile_picture}`}
+                      src={`${process.env.NEXT_PUBLIC_URL}/jobseeker/profilePic/${data.profile_picture}`}
                       alt="preview"
                       className="h-[150px] w-[150px] lg:h-[180px] lg:w-[180px] rounded-full object-cover"
                     />

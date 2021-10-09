@@ -135,7 +135,7 @@ const ApplicationCard = ({
         <img
           src={
             data.profile_picture
-              ? `${url}/images/${data.profile_picture}`
+              ? `${url}/vacancy/thumb/${data.profile_picture}`
               : 'images/user.png'
           }
           alt="profile-pic"

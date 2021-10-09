@@ -30,7 +30,7 @@ const VacancyCard = ({
   const { saved } = router.query;
   const { userId } = useContext<any>(StateContext);
   const role = userId.split('-')[0];
-  const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
+  const url = process.env.NEXT_PUBLIC_URL;
   const d1: number = new Date().getTime();
   const d2: number = Date.parse(vacancies.job_createAt);
   const datePostedInTime: number = Math.abs(d2 - d1);
@@ -43,7 +43,7 @@ const VacancyCard = ({
     day = ' day ago';
   }
 
-  let src = `${url}${vacancies.job_thumb}`;
+  let src = `${url}/vacancy/thumb/${vacancies.job_thumb}`;
   if (!vacancies.job_thumb) {
     src = '/images/company-default.png';
   }
@@ -122,6 +122,7 @@ const VacancyCard = ({
               height={100}
               unoptimized
               layout="fixed"
+              objectFit="contain"
             />
           </div>
           <div className="hidden sm:block">
@@ -132,6 +133,7 @@ const VacancyCard = ({
               height={150}
               unoptimized
               layout="fixed"
+              objectFit="contain"
             />
           </div>
 

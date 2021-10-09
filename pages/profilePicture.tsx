@@ -13,7 +13,7 @@ const profilePicture = () => {
   const router = useRouter();
   const { id, profilepic } = router.query;
   const url = `${process.env.NEXT_PUBLIC_URL}/jobseeker/picture/${id}`;
-  const profilePicUrl = `${process.env.NEXT_PUBLIC_URL}/images/${profilepic}`;
+  const profilePicUrl = `${process.env.NEXT_PUBLIC_URL}/jobseeker/profilePic/${profilepic}`;
   const [image, setImage] = useState('');
   const [imageUrl, setImageUrl] = useState<string>();
 

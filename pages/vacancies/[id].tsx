@@ -25,7 +25,7 @@ interface IProps {
 
 const VacancyDetail = ({ vacancy }: IProps) => {
   const router = useRouter();
-  const url = `${process.env.NEXT_PUBLIC_URL}/images/`;
+  const url = process.env.NEXT_PUBLIC_URL;
   const { isLoggedIn, userId } = useContext<any>(StateContext);
   const { id } = router.query;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
     setElHeight(ref.current.clientHeight - 25);
   }, [elHeight]);
 
-  let src = `${url}${vacancy.job_thumb}`;
+  let src = `${url}/vacancy/thumb/${vacancy.job_thumb}`;
   if (!vacancy.job_thumb) {
     src = '/images/company-default.png';
   }
@@ -107,6 +107,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                   width={150}
                   height={150}
                   unoptimized
+                  objectFit="contain"
                 />
               </div>
               <div className="flex flex-row justify-between gap-2 sm:justify-start sm:flex-col mx-4 sm:mx-10 w-full sm:w-auto sm:pb-4 md:pb-0">

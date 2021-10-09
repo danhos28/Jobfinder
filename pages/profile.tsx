@@ -30,7 +30,7 @@ const profile = ({ data }: IProfileProps) => {
               <div className="flex items-center justify-center w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] bg-gray-100 rounded-full">
                 {data.profile_picture ? (
                   <img
-                    src={`${process.env.NEXT_PUBLIC_URL}/images/${data.profile_picture}`}
+                    src={`${process.env.NEXT_PUBLIC_URL}/jobseeker/profilePic/${data.profile_picture}`}
                     alt="preview"
                     className="h-[120px] w-[120px] sm:h-[140px] sm:w-[140px] rounded-full object-cover"
                   />

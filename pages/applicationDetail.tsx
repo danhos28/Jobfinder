@@ -104,7 +104,7 @@ const acceptApplicant = ({ data }: any) => {
               <img
                 src={
                   data.profile_picture
-                    ? `${url}/images/${data.profile_picture}`
+                    ? `${url}/vacancy/thumb/${data.profile_picture}`
                     : 'images/user.png'
                 }
                 className="w-[60px] h-[60px] sm:w-[120px] sm:h-[120px] object-cover rounded-full"
