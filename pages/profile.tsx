@@ -3,6 +3,7 @@
 // eslint-disable-next-line no-use-before-define
 import React, { useContext } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
@@ -16,8 +17,9 @@ import Error from '../components/Error';
 const profile = ({ data }: IProfileProps) => {
   const { userId, isLoggedIn } = useContext<any>(StateContext);
   const url = `${process.env.NEXT_PUBLIC_URL}/uploadCv/${userId}`;
+  const router = useRouter();
   const downlodResume = () => {
-    axios.get(url).catch(() => null);
+    router.push(url);
   };
 
   return (
