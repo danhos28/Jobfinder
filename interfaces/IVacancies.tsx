@@ -7,7 +7,7 @@ export interface IVacancies {
   job_qualifications: string;
   job_notes: string;
   job_level: string;
-  job_educationReq: string;
+  job_educationreq: string;
   company: string;
   company_about: string;
   salary: string;

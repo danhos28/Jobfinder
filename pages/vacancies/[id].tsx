@@ -1,3 +1,4 @@
+/* eslint-disable react/style-prop-object */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-children-prop */
@@ -18,6 +19,7 @@ import Navbar from '../../components/Navbar';
 import Button from '../../components/Button';
 import { IVacancies } from '../../interfaces/IVacancies';
 import Modal from '../../components/Modal';
+import Footer from '../../components/Footer';
 
 interface IProps {
   vacancy: IVacancies;
@@ -96,7 +98,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
         className="relative flex flex-col justify-center items-center pt-[60px] sm:pt-[80px] pb-14 h-full w-screen bg-gray-100"
         ref={ref}
       >
-        <div className="flex flex-col items-center justify-start h-full w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden">
+        <div className="flex flex-col items-center justify-start h-full w-screen sm:w-[90vw] max-w-screen-xl pb-8 bg-white shadow-md rounded-md overflow-hidden font-poppins">
           <div className="hidden sm:block bg-gradient-to-r from-blue-700 via-blue-500 to-blue-700 w-full h-[40px] mb-2" />
           <div className="flex justify-between items-center w-full px-0 sm:px-10 pb-2 py-4 sm:py-0 border-b-[1px]">
             <div className="flex bg-white w-full sm:w-auto items-center">
@@ -121,18 +123,30 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                       unoptimized
                     />
                   </div>
-                  <p className="font-bold text-md uppercase font-poppins">
+                  <p className="font-bold text-md uppercase">
                     {vacancy.job_title}
                   </p>
-                  <p className="mb-4 block sm:hidden">{vacancy.company}</p>
+                  <p className="mb-4 block sm:hidden text-sm">
+                    {vacancy.company}
+                  </p>
                 </div>
                 <p className="mb-4 hidden sm:block">{vacancy.company}</p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button type="button" variant="blue" onClick={applyHandler}>
+                <div className="flex flex-col sm:flex-row gap-4 items-end justify-center">
+                  <Button
+                    type="button"
+                    variant="blue"
+                    style="text-sm sm:text-base py-[10px] sm:py-3 w-[105px]"
+                    onClick={applyHandler}
+                  >
                     APPLY
                   </Button>
-                  <Button type="button" variant="green" onClick={saveHandler}>
-                    <div className="flex items-center justify-center gap-2">
+                  <Button
+                    type="button"
+                    variant="green"
+                    onClick={saveHandler}
+                    style="text-sm sm:text-base py-[10px] sm:py-3 w-[105px]"
+                  >
+                    <div className="flex items-center justify-center gap-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
@@ -150,10 +164,10 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                       SAVE
                     </div>
                   </Button>
-                  <div className="items-center sm:hidden block">
+                  <div className="items-center sm:hidden flex">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="h-5 w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -171,7 +185,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                    <p className="ml-2 sm:hidden block">
+                    <p className="ml-2 sm:hidden block text-xs sm:text-base">
                       {vacancy.job_location}
                     </p>
                   </div>
@@ -182,7 +196,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
             <div className="items-center sm:flex hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -223,7 +237,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                   <h1 className="font-semibold text-md mb-2">
                     Educational Requirement
                   </h1>
-                  <p className="text-blue-700">{vacancy.job_educationReq}</p>
+                  <p className="text-blue-700">{vacancy.job_educationreq}</p>
                 </div>
                 <div className="flex flex-col">
                   <h1 className="font-semibold text-md mb-2">
@@ -257,7 +271,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                 <p className="text-blue-700">{vacancy.category}</p>
               </div>
             </div>
-            <div className="flex flex-col w-full border-t-[1px] py-4">
+            <div className="flex flex-col w-full border-t-[1px] py-6">
               <h1 className="font-semibold text-md mb-2">
                 About {vacancy.company}
               </h1>
@@ -280,6 +294,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
           )}
         </AnimatePresence>
       </div>
+      <Footer />
     </Layout>
   );
 };

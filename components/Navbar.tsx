@@ -104,7 +104,7 @@ const Navbar = () => {
               : 'hidden sm:flex justify-between h-full w-auto'
           }
         >
-          <ul className="flex flex-col sm:flex-row list-none bg-gray-50 sm:bg-white w-screen sm:w-auto text-center shadow-md sm:shadow-none">
+          <ul className="flex flex-col text-sm sm:text-base sm:flex-row list-none bg-gray-50 sm:bg-white w-screen sm:w-auto text-center shadow-md sm:shadow-none">
             <li className="li-navbar">
               <div className="flex justify-center items-center gap-1">
                 <Link href="/">Home</Link>

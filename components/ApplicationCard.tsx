@@ -128,7 +128,7 @@ const ApplicationCard = ({
 
   return (
     <div
-      className="flex flex-col xl:flex-row xl:items-center gap-4 w-full border-b-[1px] py-2 pl-2 pr-4 lg:py-4 xl:py-2 bg-white"
+      className="flex flex-col xl:flex-row xl:items-center gap-4 w-full border-b-[1px] py-4 pl-2 pr-4 xl:py-2 bg-white"
       key={data.application_id}
     >
       <div className="flex gap-2 w-full">
@@ -157,7 +157,7 @@ const ApplicationCard = ({
         </div>
       </div>
 
-      <div className="flex flex-col xl:items-center w-[30%] lg:flex text-sm px-2">
+      <div className="flex flex-col xl:items-center w-full xl:w-[30%] lg:flex text-sm px-2">
         <p className="text-black font-base text-sm mb-2">{data.job_title}</p>
         {renderResult(data.application_id)}
       </div>

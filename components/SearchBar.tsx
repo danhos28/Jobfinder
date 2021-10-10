@@ -36,7 +36,7 @@ const SearchBar = () => {
       <div className="flex w-full relative">
         <input
           placeholder="Search job or company ..."
-          className="h-10 sm:h-12 flex-grow px-4"
+          className="h-10 sm:h-12 px-4 w-full"
           onChange={handleFilter}
           onFocus={() => setIsExpanded(true)}
           onBlur={() => setIsExpanded(false)}

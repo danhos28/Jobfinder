@@ -104,7 +104,7 @@ const acceptApplicant = ({ data }: any) => {
                 className="w-[60px] h-[60px] sm:w-[120px] sm:h-[120px] object-cover rounded-full"
                 alt="profile-pic"
               />
-              <div className="flex flex-col justify-center w-3/4">
+              <div className="flex flex-col justify-center w-3/4 text-sm sm:text-base">
                 <p className="capitalize text-base">
                   {`${data.first_name} ${data.last_name}`}
                 </p>
@@ -152,24 +152,26 @@ const acceptApplicant = ({ data }: any) => {
 
           <div className="flex-col text-sm pb-16">
             <div className="flex p-4 sm:p-8 flex-col border-b-[1px]">
-              <h1 className="pb-2 text-base">
+              <h1 className="pb-2 text-sm sm:text-base">
                 Applied for:{' '}
                 <span className=" font-bold text-blue-700">
                   {data.job_title}
                 </span>
               </h1>
-              <h1 className="pb-2 font-bold">Qualifications</h1>
+              <h1 className="pb-2 font-bold text-sm sm:text-base">
+                Qualifications
+              </h1>
               <ReactMarkdown children={data.job_qualifications} />
             </div>
 
             <div className="flex flex-col px-4 sm:px-8">
-              <h1 className="capitalize mb-2 mt-4 font-bold text-base">{`about ${data.first_name}`}</h1>
+              <h1 className="capitalize mb-2 mt-4 font-bold text-sm sm:text-base">{`about ${data.first_name}`}</h1>
               <p className="mb-8">{data.message}</p>
 
               <Button
                 type="button"
                 variant="white"
-                style="border-2 rounded-full w-[212px] border-blue-700 font-bold text-blue-700 flex gap-1"
+                style="border-2 rounded-full w-[212px] border-blue-700 font-bold text-blue-700 flex gap-1 text-sm sm:text-base"
                 onClick={() => downlodResume(data.jobseeker_id)}
               >
                 DOWNLOAD RESUME

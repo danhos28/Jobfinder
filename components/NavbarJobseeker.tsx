@@ -34,7 +34,7 @@ const NavbarJobseeker = ({ username, logoutHandler }: IProps) => {
             : 'hidden sm:flex justify-between h-full w-auto'
         }
       >
-        <ul className="flex flex-col sm:flex-row list-none bg-gray-50 sm:bg-white w-screen sm:w-auto text-center shadow-md sm:shadow-none">
+        <ul className="flex flex-col sm:flex-row list-none text-sm sm:text-base bg-gray-50 sm:bg-white w-screen sm:w-auto text-center shadow-md sm:shadow-none">
           <li className="li-navbar">
             <Link href="/">Home</Link>
           </li>
