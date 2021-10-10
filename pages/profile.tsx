@@ -2,7 +2,6 @@
 /* eslint-disable camelcase */
 // eslint-disable-next-line no-use-before-define
 import React, { useContext } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
