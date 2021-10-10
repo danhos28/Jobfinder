@@ -73,14 +73,8 @@ const acceptApplicant = ({ data }: any) => {
       .catch(() => null);
   };
 
-  const downlodResume = () => {
-    axios.get(`${url}/uploadCv/${data.jobseeker_id}`).catch(() => {
-      // Swal.fire({
-      //   icon: 'error',
-      //   title: 'Oops...',
-      //   text: 'No resume found!',
-      // });
-    });
+  const downlodResume = (jobseekerId: string) => {
+    router.push(`${url}/uploadCv/${jobseekerId}`);
   };
 
   useEffect((): any => {
@@ -176,7 +170,7 @@ const acceptApplicant = ({ data }: any) => {
                 type="button"
                 variant="white"
                 style="border-2 rounded-full w-[212px] border-blue-700 font-bold text-blue-700 flex gap-1"
-                onClick={downlodResume}
+                onClick={() => downlodResume(data.jobseeker_id)}
               >
                 DOWNLOAD RESUME
                 <svg
