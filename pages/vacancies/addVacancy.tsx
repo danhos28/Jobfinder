@@ -33,7 +33,7 @@ const addVacancy = () => {
     postFormData.append('job_qualifications', formData.job_qualifications);
     postFormData.append('job_notes', formData.job_notes);
     postFormData.append('job_level', formData.job_level);
-    postFormData.append('job_educationReq', formData.job_educationReq);
+    postFormData.append('job_educationreq', formData.job_educationreq);
     postFormData.append('salary', formData.salary);
     postFormData.append('employment_type', formData.employment_type);
     postFormData.append('category', formData.category);
@@ -207,7 +207,7 @@ const addVacancy = () => {
                       required
                       {...register('job_educationReq')}
                       className="w-[160px]"
-                      defaultValue={data?.job_educationReq}
+                      defaultValue={data?.job_educationreq}
                     >
                       <option value="less than high school">
                         Less than high school
