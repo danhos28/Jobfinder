@@ -15,7 +15,7 @@ const Card = (props: IProps) => {
         src={src}
         alt="carousel"
       />
-      <div className="absolute bottom-4 left-2 text-gray-100 bg-gray-500 bg-opacity-20 px-4 py-1 rounded-lg font-poppins hover:underline">
+      <div className="font-bold absolute bottom-4 left-2 text-gray-100 bg-gray-500 bg-opacity-20 px-4 py-1 rounded-lg font-poppins">
         <Link href="/">{content}</Link>
       </div>
     </div>

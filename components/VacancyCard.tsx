@@ -28,7 +28,7 @@ const VacancyCard = ({
 
   const router = useRouter();
   const { saved } = router.query;
-  const { userId } = useContext<any>(StateContext);
+  const { userId, isLoggedIn } = useContext<any>(StateContext);
   const role = userId.split('-')[0];
   const url = process.env.NEXT_PUBLIC_URL;
   const d1: number = new Date().getTime();
@@ -50,30 +50,35 @@ const VacancyCard = ({
 
   const saveHandler = (event: React.MouseEvent) => {
     event.stopPropagation();
-    axios
-      .post(`${process.env.NEXT_PUBLIC_URL}/savejob`, {
-        jobseeker_id: userId,
-        vacancy_id: vacancies.vacancy_id,
-      })
-      .then(() => {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-          },
-        });
 
-        Toast.fire({
-          icon: 'success',
-          title: 'Job saved!',
-        });
-      })
-      .catch((err) => console.log(err));
+    if (isLoggedIn) {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_URL}/savejob`, {
+          jobseeker_id: userId,
+          vacancy_id: vacancies.vacancy_id,
+        })
+        .then(() => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
+            },
+          });
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Job saved!',
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      router.push('/login');
+    }
   };
 
   const editHandler = (event: React.MouseEvent, vacancyId: string) => {

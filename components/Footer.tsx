@@ -16,20 +16,20 @@ const Footer = () => (
     <div className="flex flex-col sm:flex-row justify-between h-2/4 max-h-[400px] w-4/6 max-w-screen-lg text-gray-200 gap-6">
       <div className="flex flex-col justify-around">
         <h2 className="font-bold mb-2 sm:mb-4">Candidates</h2>
-        <Link href="/">Sign Up</Link>
+        <Link href="/register">Sign Up</Link>
         <Link href="/">Testimonials</Link>
-        <Link href="/">Job Board</Link>
+        <Link href="/dashboard">Job Board</Link>
       </div>
       <div className="flex flex-col justify-around">
         <h2 className="font-bold mb-2 sm:mb-4">Employer</h2>
-        <Link href="/">Start Hiring</Link>
+        <Link href="/register/employer">Start Hiring</Link>
         <Link href="/">Jobfinder Partnership</Link>
         <Link href="/">Testimonials</Link>
       </div>
       <div className="flex flex-col justify-around">
         <h2 className="font-bold mb-2 sm:mb-4">About</h2>
         <Link href="/">About</Link>
-        <Link href="/">Careers</Link>
+        <Link href="/dashboard">Careers</Link>
         <Link href="/">Newsroom</Link>
       </div>
       <div className="flex flex-col justify-around">

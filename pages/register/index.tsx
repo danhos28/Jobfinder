@@ -2,6 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import Button from '../../components/Button';
 import Footer from '../../components/Footer';
 import Layout from '../../components/Layout';
@@ -12,7 +13,12 @@ const register = () => (
     <div>
       <Navbar />
       <div className="flex justify-evenly items-center bg-layer-three w-screen h-full bg-bottom font-poppins">
-        <div className="flex flex-col justify-between mt-[calc(60px+5vh)] mb-[6vh] pb-8 items-center w-[90vw] sm:w-3/4 h-[90vh] max-h-[800px] bg-white rounded-lg shadow-lg overflow-hidden">
+        <motion.div
+          initial={{ y: -120, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="flex flex-col justify-between mt-[calc(60px+5vh)] mb-[6vh] pb-8 items-center w-[90vw] sm:w-3/4 h-[90vh] max-h-[800px] bg-white rounded-lg shadow-lg overflow-hidden"
+        >
           <div className="flex flex-col justify-around items-center bg-gradient-to-r from-blue-500 via-blue-400 to-blue-600 px-4 py-2 text-gray-50 w-full h-1/6">
             <h1 className="text-base font-bold sm:text-2xl">
               We're glad you're here!
@@ -97,7 +103,7 @@ const register = () => (
               <Link href="/login">Log in.</Link>
             </span>
           </p>
-        </div>
+        </motion.div>
       </div>
     </div>
     <Footer />

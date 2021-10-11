@@ -83,7 +83,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const url = process.env.NEXT_PUBLIC_URL;
   const res = await fetch(
     searchVacancy
-      ? `${url}/vacancy/search?searchVacancy=${searchVacancy}`
+      ? `${url}/vacancy/search?searchVacancy=${searchVacancy}&page=${page}&perPage=${perPage}`
       : `${url}/vacancy?page=${page}&perPage=${perPage}`,
   );
   const vacancies = await res.json();
