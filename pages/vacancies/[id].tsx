@@ -121,6 +121,7 @@ const VacancyDetail = ({ vacancy }: IProps) => {
                       width={150}
                       height={150}
                       unoptimized
+                      objectFit="contain"
                     />
                   </div>
                   <p className="font-bold text-md uppercase">
