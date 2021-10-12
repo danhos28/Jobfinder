@@ -6,7 +6,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Quotes from './Quotes';
 
 const Carousels = () => (
-  <div className="flex flex-col h-full w-screen lg:h-auto justify-evenly items-center px-4 sm:px-0 lg:py-24 bg-layer">
+  <div className="flex flex-col h-full w-screen lg:h-auto justify-evenly items-center px-4 sm:px-0 bg-layer py-16">
     <div className="font-poppins">
       <h1 className="font-black text-3xl mt-12 lg:mt-0 px-4 lg:px-0">
         Endless career opportunities await.

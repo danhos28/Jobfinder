@@ -75,3 +75,23 @@ ul {
   transition: all;
   transition-duration: 100ms;
 }
+
+@keyframes marquee {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -100%;
+  }
+}
+
+.animate {
+  width: 200%;
+  animation: marquee 20s linear infinite;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.animate:hover {
+  animation-play-state: paused;
+}

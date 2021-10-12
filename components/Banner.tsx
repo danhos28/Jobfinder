@@ -1,8 +1,8 @@
 import Link from 'next/link';
 // bg-[color:#4686C1]
 const Banner = () => (
-  <div className="flex justify-center items-center bg-[color:#4686C1] w-screen pb-20">
-    <div className="flex flex-col md:flex-row justify-between items-center w-screen sm:w-[80vw] h-[380px] bg-white max-w-screen-lg sm:rounded-lg overflow-hidden shadow-2xl">
+  <div className="flex justify-center items-center bg-[color:#4686C1] w-screen py-16">
+    <div className="flex flex-col md:flex-row justify-between items-center w-screen sm:w-[80vw] h-full bg-white max-w-screen-lg sm:rounded-lg overflow-hidden shadow-2xl">
       <div className="flex flex-col justify-center items-start bg-gradient-to-br from-blue-400 to-blue-600 text-gray-50 p-12 w-full h-full font-poppins">
         <h1 className="text-2xl sm:text-4xl font-bold text-left">
           Reach new career heights with us
